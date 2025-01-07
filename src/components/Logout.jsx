@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
@@ -90,6 +91,8 @@ function DateTimeDisplay() {
   };
 
   return (
+    <>
+    <Navbar/>
     <div style={{ textAlign: "center", marginTop: "20px" }}>
       <h1 style={{ color: "black" }}>Store Logout Time</h1>
 
@@ -166,6 +169,7 @@ function DateTimeDisplay() {
         )}
       </div>
     </div>
+    </>
   );
 }
 

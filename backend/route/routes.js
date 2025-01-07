@@ -28,33 +28,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// GET /api/user
-// router.get('/user', async (req, res) => {
-//     try {
-//         // Ensure the Authorization header follows 'Bearer <token>' format
-//         const authHeader = req.headers.authorization;
 
-//         if (!authHeader || !authHeader.startsWith('Bearer ')) {
-//             return res.status(401).json({ message: 'Authorization token is missing or incorrect format.' });
-//         }
-
-//         const authToken = authHeader.split(' ')[1]; // Extract the token by splitting at the space
-//         const decoded = jwt.verify(authToken, "your_secret_key"); // Decode the token to get user ID
-
-//         const userId = decoded.id;
-
-//         // Fetch user from the database
-//         const user = await User.findById(userId).select("name email");
-//         if (!user) {
-//             return res.status(404).json({ message: 'User not found' });
-//         }
-
-//         res.json(user);
-//     } catch (error) {
-//         console.error('Error in /api/user:', error.message);
-//         res.status(500).json({ message: 'Server error', error: error.message });
-//     }
-// });
 
 
 module.exports = router; 

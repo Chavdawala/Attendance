@@ -21,7 +21,7 @@ function Signup() {
     const userData = { name, email, password };
 
     try {
-      const response = await fetch('http://localhost:5000/api/register', {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -110,10 +110,10 @@ function Signup() {
           Sign Up
         </button>
       </form>
-      {/* <p className='login'>
+      <p className='login' style={{color:'black'}}>
         Back to Login Page{' '}
         <Link to="/Home">Login</Link>
-      </p> */}
+      </p>
     </div>
   );
 }
