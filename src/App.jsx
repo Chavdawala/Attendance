@@ -10,11 +10,15 @@ import Dataana from './components/Dataana';
 import Hr from './components/Hr';
 import Logout from './components/Logout';
 import Employee from './components/Employee';
+import Profile from './components/Profile'; // Corrected import
+import Admin from './Admin/Admin';
+import UserData from './Admin/UserData';
 
 const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
@@ -22,9 +26,12 @@ const App = () => {
         <Route path="/department" element={<Department />} />
         <Route path="/fullstack" element={<Fullstack />} />
         <Route path="/dataana" element={<Dataana />} />
-        <Route path="/hr" element={<Hr />} /> {/* Route is fine here */}
+        <Route path="/hr" element={<Hr />} />
         <Route path="/logout" element={<Logout />} />
-        <Route path="/employee" element={<Employee />} /> {/* Corrected route */}
+        <Route path="/employee" element={<Employee />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/userdata" element={<UserData />} />
       </Routes>
     </Router>
   );
