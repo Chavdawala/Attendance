@@ -94,7 +94,7 @@ const Home = () => {
                     <button type="submit" className="btn">Login</button>
 
                     <p className='sign'>
-                        Don't have an account? <Link to="/signup">Sign up</Link>
+                        Don't have an account? <Link to="/signup" style={{color:''}}>Sign up</Link>
                     </p>
                 </form>
             </div>

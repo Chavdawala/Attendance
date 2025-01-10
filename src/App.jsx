@@ -14,6 +14,7 @@ import Profile from './components/Profile'; // Corrected import
 import Admin from './Admin/Admin';
 import UserData from './Admin/UserData';
 
+
 const App = () => {
   return (
     <Router>
@@ -32,6 +33,7 @@ const App = () => {
         <Route path="/profile" element={<Profile />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/userdata" element={<UserData />} />
+        
       </Routes>
     </Router>
   );

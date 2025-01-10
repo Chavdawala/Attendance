@@ -1,131 +1,137 @@
 /* Global styles */
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f7fc;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    /* background: linear-gradient(135deg, #74ebd5, #9face6); */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh; */
 }
 
 .fullscreen {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-image: url('https://img.freepik.com/free-vector/technology-wire-mesh-network-connection-digital-background_1017-28407.jpg?t=st=1733828167~exp=1733831767~hmac=625ddfd0b89c11825514e247507343d1b3810e2b06892d583400bea8344a1cdb&w=1060');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  z-index: 1;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-image: url('https://img.pikbest.com/ai/illus_our/20230426/93edb31f1b75422132d82c69c6a5de02.jpg!bw700');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
 }
 
 h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #f4f1f1;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ffffff;
 }
 
 /* Container for the login form */
 .loginContainer {
-  display: flex; /* Align children in a flexbox */
-  flex-direction: column; /* Stack items vertically */
-  align-items: center; /* Center horizontally */
-  text-align: center; /* Center align text content */
-  justify-content: center; /* Center the container content vertically */
-  width: 100%;
-  max-width: 400px;
-  background-color: rgba(95, 110, 155, 0.5);
-  padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 50px auto 0 auto; /* Adds 50px top margin, centers horizontally */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    width: 100%;
+    max-width: 400px;
+    /* background-color: rgba(255, 255, 255, 0.5); */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    margin: 50px auto 0 auto;
 }
 
 /* Form Styles */
 .login-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
+    display: flex;
+    margin-top: 0px;
+    flex-direction: column;
+    width: 100%;
 }
 
 .form-group {
-  margin-bottom: 20px;
-  text-align: center; /* Align labels and input content */
-  width: 100%; /* Ensures full width inside container */
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
 }
 
 .form-group label {
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #eee7e7;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: black;
 }
 
 .form-group input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 6px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-size: 16px;
-  color: #333;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-  text-align: center; /* Aligns input text to center */
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    color: black;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-/* Input field focus state */
 .form-group input:focus {
-  border-color: #3b82f6;
-  outline: none;
+    border-color: #74ebd5;
+    outline: none;
+    box-shadow: 0 0 8px rgba(116, 235, 213, 0.3);
 }
 
 /* Button Style */
 .btn {
-  width: 100%; /* Makes the button take full width */
-  padding: 12px;
-  background-color: #3b82f6;
-  color: white;
-  font-size: 16px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  text-align: center;
-}
-
-.sign {
-  color: #f4f1f1;
-  margin-top: 10px;
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #74ebd5, #9face6);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-align: center;
 }
 
 .btn:hover {
-  background-color: #2563eb;
+    background: linear-gradient(135deg, #9face6, #74ebd5);
+    transform: translateY(-2px);
+}
+
+.sign {
+    color: black;
+    margin-top: 10px;
+}
+
+.btn:active {
+    transform: translateY(0);
 }
 
 /* Error message styles */
 .error {
-  color: #e3342f;
-  font-size: 14px;
-  text-align: center;
-  margin-bottom: 20px;
+    color: #e3342f;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 /* Responsive Design */
 @media (max-width: 500px) {
-  .loginContainer {
-      padding: 20px;
-      margin-top: 30px; /* Adjust top margin for smaller screens */
-  }
+    .loginContainer {
+        padding: 20px;
+        margin-top: 30px;
+    }
 
-  .form-group input {
-      font-size: 14px;
-  }
+    .form-group input {
+        font-size: 14px;
+    }
 
-  .btn {
-      font-size: 14px;
-  }
+    .btn {
+        font-size: 14px;
+    }
 }
