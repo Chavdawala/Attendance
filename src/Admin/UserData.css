@@ -83,6 +83,22 @@ form button:active {
     transform: translateY(0);
 }
 
+.time, .time1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.time input, .time1 input {
+    width: calc(50% - 1rem); 
+}
+
+.time1 {
+    margin-left: 0; 
+}
+
+
 @media (max-width: 768px) {
     form {
         padding: 1.5rem 2rem;

@@ -10,8 +10,15 @@ const Userform = () => {
     City: '',
     email: '',
     phone: '',
-    department: '' ,
-    jobtype:''
+    department: '',
+    jobtype: '',
+    joinDate: '',
+    contractDuration: '',
+    internshipDuration: '',
+    endDate: '',
+    shift: '',
+    startTime: '',
+    endTime:''
   });
 
   const handleChange = (e) => {
@@ -28,7 +35,7 @@ const Userform = () => {
     <>
       <Navbar />
       <form onSubmit={handlesubmit}>
-        <h1 style={{color:'black'}}>Enter Data</h1>
+        <h1 style={{ color: 'black' }}>Enter Data</h1>
         <div>
           <label htmlFor="firstname">First Name:</label>
           <input
@@ -91,6 +98,21 @@ const Userform = () => {
             placeholder="123-456-7890"
           />
         </div>
+
+        <div>
+          <label htmlFor="jobtype">Job Type:</label>
+          <select
+            id="jobtype"
+            name="jobtype"
+            value={Formdata.jobtype}
+            onChange={handleChange}
+          >
+            <option value="">Select Job Type</option>
+            <option value="Employee">Employee</option>
+            <option value="Intern">Intern</option>
+          </select>
+        </div>
+
         <div>
           <label htmlFor="department">Department:</label>
           <select
@@ -110,18 +132,121 @@ const Userform = () => {
             <option value="Content Writer">Content Writer</option>
           </select>
         </div>
-        <div>
-          <lable htmlFor='jobtype'>Job Type:
-          </lable>
-          <select
-           id="jobtype"
-           name="jobtype"
-           value={Formdata.jobtype}
-           onChange={handleChange}>
-            <option value='Employee'>Employee</option>
-            <option value='Intern'>Intern</option>
-           </select>
-        </div>
+
+        {Formdata.jobtype === "Employee" && (
+          <>
+            <div>
+              <label htmlFor="employee-options">Employee Options:</label>
+              <select id="employee-options" name="employee-options">
+                <option value="">Select Option</option>
+                <option value="Permanent">Permanent</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="joinDate">Join Date:</label>
+              <input
+                type="date"
+                id="joinDate"
+                name="joinDate"
+                value={Formdata.joinDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="contractDuration">Contract Duration (in Years, if Any):</label>
+              <input
+                type="number"
+                id="contractDuration"
+                name="contractDuration"
+                value={Formdata.contractDuration}
+                onChange={handleChange}
+              />
+            </div>
+          </>
+        )}
+
+        {Formdata.jobtype === "Intern" && (
+          <>
+            <div>
+              <label htmlFor="intern-options">Intern Options:</label>
+              <select id="intern-options" name="intern-options">
+                <option value="">Select Option</option>
+                <option value="Paid">Paid</option>
+                <option value="Unpaid">Unpaid</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="joinDate">Join Date:</label>
+              <input
+                type="date"
+                id="joinDate"
+                name="joinDate"
+                value={Formdata.joinDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="internshipDuration">Internship Duration (in Months):</label>
+              <input
+                type="number"
+                id="internshipDuration"
+                name="internshipDuration"
+                value={Formdata.internshipDuration}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="endDate">End Date:</label>
+              <input
+                type="date"
+                id="endDate"
+                name="endDate"
+                value={Formdata.endDate}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="shift">Shift:</label>
+              <select
+                id="shift"
+                name="shift"
+                value={Formdata.shift}
+                onChange={handleChange}
+              >
+                <option value="">Select Shift</option>
+                <option value="morning">Morning - 10:30 To 2:30</option>
+                <option value="afternoon">Afternoon - 2:30 To 6:30</option>
+                <option value="custom">Custom</option>
+              </select>
+            </div>
+            {Formdata.shift === 'custom' && (
+              <>
+              <div className="time">
+                <label htmlFor="time">Enter StartTime:</label>
+                <input
+                  type="text"
+                  id="startTime"
+                  name="startTime"
+                  value={Formdata.startTime}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="time1">
+                <label htmlFor="time">Enter End Time:</label>
+                <input
+                  type="text"
+                  id="endTime"
+                  name="endTime"
+                  value={Formdata.endTime}
+                  onChange={handleChange}
+                />
+              </div>
+                </>
+            )}
+          </>
+        )}
+
         <button type="submit">Submit</button>
       </form>
     </>
