@@ -1,24 +1,25 @@
 import { useState } from "react";
-import Navbar from './Navbar';
-import './UserData.css';
+import Navbar from "./Navbar";
+import "./UserData.css";
 
 const Userform = () => {
   const [Formdata, SetFormdata] = useState({
-    firstname: '',
-    lastname: '',
-    Birthdate: '',
-    City: '',
-    email: '',
-    phone: '',
-    department: '',
-    jobtype: '',
-    joinDate: '',
-    contractDuration: '',
-    internshipDuration: '',
-    endDate: '',
-    shift: '',
-    startTime: '',
-    endTime:''
+    firstname: "",
+    lastname: "",
+    Birthdate: "",
+    City: "",
+    email: "",
+    email1: "",
+    phone: "",
+    department: "",
+    jobtype: "",
+    joinDate: "",
+    contractDuration: "",
+    internshipDuration: "",
+    endDate: "",
+    shift: "",
+    startTime: "",
+    endTime: "",
   });
 
   const handleChange = (e) => {
@@ -26,10 +27,40 @@ const Userform = () => {
     SetFormdata({ ...Formdata, [name]: value });
   };
 
-  const handlesubmit = (e) => {
+  const handlesubmit = async (e) => {
     e.preventDefault();
-    console.log('userdata:', Formdata);
+
+    // Validate required fields
+    if (!Formdata.firstname || !Formdata.lastname || !Formdata.email) {
+      alert("Please fill out all required fields.");
+      return;
+    }
+
+    const formDataToSubmit = { ...Formdata };
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/saveUser`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formDataToSubmit),
+      });
+
+      if (!response.ok) {
+        const result = await response.json();
+        alert(result.error || "An error occurred");
+      } else {
+        const result = await response.json();
+        alert(result.message || "Form submitted successfully");
+      }
+    } catch (error) {
+      console.error("Error submitting form data:", error);
+      alert("Error submitting form data. Please try again later.");
+    }
   };
+
+  
 
   return (
     <>
@@ -77,12 +108,22 @@ const Userform = () => {
           />
         </div>
         <div>
-          <label htmlFor="email">Email:</label>
+          <label htmlFor="email">Email (Same as login):</label>
           <input
             type="email"
             id="email"
             name="email"
             value={Formdata.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email1"
+            id="email1"
+            name="email1"
+            value={Formdata.email1}
             onChange={handleChange}
           />
         </div>
@@ -94,7 +135,7 @@ const Userform = () => {
             name="phone"
             value={Formdata.phone}
             onChange={handleChange}
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+          
             placeholder="123-456-7890"
           />
         </div>
@@ -227,7 +268,7 @@ const Userform = () => {
                 <input
                   type="text"
                   id="startTime"
-                  name="startTime"
+                  name="startTime"  
                   value={Formdata.startTime}
                   onChange={handleChange}
                 />
@@ -247,7 +288,7 @@ const Userform = () => {
           </>
         )}
 
-        <button type="submit">Submit</button>
+        <button type="submit" >Submit</button>
       </form>
     </>
   );
