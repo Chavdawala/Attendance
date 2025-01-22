@@ -64,7 +64,7 @@ const Home = () => {
         <div className='fullscreen'>
             <div className="loginContainer">
                 <form className="login-form" onSubmit={handleSubmit}>
-                    <h2>Login</h2>
+                    <h2 style={{color:'black'}}>Login</h2>
                     {error && <p className="error">{error}</p>}
 
                     <div className="form-group">

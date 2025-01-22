@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './UserData';
-
+import './AdminLogin.css';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -26,12 +26,9 @@ const Login = () => {
     return (
         <div>
             <form onSubmit={handleSubmit}>
+                <h2 style={{color:'black'}}>Admin Login</h2>
                 <table>
-                    <thead>
-                        <tr>
-                            <th>Login</th>
-                        </tr>
-                    </thead>
+                    
                     <tbody>
                         <tr>
                             <td>Username:</td>

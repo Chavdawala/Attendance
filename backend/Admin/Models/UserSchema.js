@@ -1,25 +1,27 @@
-// UserDetailsSchema.js
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-// Schema without the required fields 'name' and 'password'
-const userDetailsSchema = new mongoose.Schema({
-  firstname: { type: String },
-  lastname: { type: String },
-  Birthdate: { type: Date },
-  City: { type: String },
-  email: { type: String, unique: true }, // You can keep email unique
-  email1: { type: String },
-  phone: { type: String },
-  department: { type: String },
-  jobtype: { type: String },
-  joinDate: { type: Date },
-  contractDuration: { type: Number },
-  internshipDuration: { type: Number },
-  endDate: { type: Date },
-  shift: { type: String },
-  startTime: { type: String },
-  endTime: { type: String },
+const userSchema = new Schema({
+  department: { type: String, required: true },
+  users: [{
+    firstname: String,
+    middlename: String,
+    lastname: String,
+    Birthdate: Date,
+    City: String,
+    email: { type: String, unique: true },
+    email1: String,
+    phone: String,
+    jobtype: String,
+    joinDate: Date,
+    contractDuration: Number,
+    internshipDuration: Number,
+    endDate: Date,
+    shift: String,
+    startTime: String,
+    endTime: String,
+  }],
 });
 
-// Check if the 'UserDetails' model is already defined, and if not, define it.
-module.exports = mongoose.models.UserDetails || mongoose.model('UserDetails', userDetailsSchema);
+const UserDetails = mongoose.model('UserDetails', userSchema);
+module.exports = UserDetails;
