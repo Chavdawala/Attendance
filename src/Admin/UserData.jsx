@@ -10,7 +10,7 @@ const Userform = () => {
     Birthdate: "",
     City: "",
     email: "",
-    email1: "",
+    secondemail: "",
     phone: "",
     department: "",
     jobtype: "",
@@ -145,9 +145,9 @@ const Userform = () => {
           <label htmlFor="email1">Secondary Email:</label>
           <input
             type="email"
-            id="email1"
-            name="email1"
-            value={Formdata.email1 || ''}
+            id="secondemail"
+            name="secondemail"
+            value={Formdata.secondemail || ''}
             onChange={handleChange}
           />
         </div>
@@ -314,7 +314,7 @@ const Userform = () => {
 
        
       </form>
-      <button type="submit">Submit</button>
+      <button type="submit" onClick={handlesubmit}>Submit</button>
     </>
   );
 };
