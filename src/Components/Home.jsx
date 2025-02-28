@@ -30,7 +30,10 @@ const Home = () => {
         const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
             email: formData.email.trim(),
             password: formData.password,
+        }, {
+            headers: { "Content-Type": "application/json" }
         });
+        
 
         const { authToken, user } = res.data;
         sessionStorage.setItem("authToken", authToken);
@@ -54,9 +57,7 @@ const handleGoogleLoginSuccess = async (response) => {
         });
 
             const { authToken, user } = res.data;
-            console.log('google login data',user);
-            console.log('--------------------------------');
-            console.log('google authtoken',authToken);
+           
             sessionStorage.setItem("authToken", authToken);
             sessionStorage.setItem("userId", user.id);
             sessionStorage.setItem("userName", user.name);

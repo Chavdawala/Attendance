@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -65,6 +66,12 @@ const AdminLogin = () => {
                     <button type="submit" className="w-full bg-blue-500 text-white p-3 rounded-lg">
                         LOGIN
                     </button>
+
+                    <p className="text-center mt-4 text-black">
+          <Link to="/home" className="text-blue-500 cursor-pointer hover:underline">
+            Employee Login
+          </Link>
+        </p>
                 </form>
             </div>
         </div>
