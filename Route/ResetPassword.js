@@ -19,15 +19,11 @@ router.post("/reset-password", async (req, res) => {
 
         // Find user by email (decoded from token)
         const user = await User.findOne({ email: decoded.email });
-        console.log('----------');
-        console.log("reset Password", user);
-        console.log('----------');
+       
         if (!user) {
             return res.status(400).json({ message: "Invalid or expired token." });
         }
 
-        // Hash the new password
-        // const hashedPassword = await bcrypt.hash(password, 10);
         user.password = password;
         await user.save();
         console.log(" Reset DB Password", user);
