@@ -98,28 +98,41 @@ const deleteUser = async (req, res) => {
   try {
     const { email } = req.params;
 
+    console.log("Received delete request for email:", email);
+
     if (!email || email.trim() === '' || email === "null") {
       return res.status(400).json({ message: "Invalid email provided." });
     }
 
-    console.log("Deleting user with email:", email);
-
+    // Find the document and filter out any users with null email values
     const result = await UserDetails.findOneAndUpdate(
       { "users.email": email },
-      { $pull: { users: { email: email } } },
+      { 
+        $pull: { users: { email: email } } 
+      },
       { new: true }
     );
 
     if (!result) {
+      console.log("User not found in database.");
       return res.status(404).json({ message: "User not found." });
     }
 
+    // Clean up null emails in case they exist
+    await UserDetails.updateMany(
+      { "users.email": null },
+      { $pull: { users: { email: null } } }
+    );
+
+    console.log("User deleted successfully:", email);
     res.status(200).json({ message: "User deleted successfully." });
+
   } catch (error) {
-    console.error("Error deleting user:", error);
-    res.status(500).json({ message: "Server error." });
+    console.error("Error deleting user:", error.message);
+    res.status(500).json({ message: "Server error.", details: error.message });
   }
 };
+
 
 // Fetch a user by email
 const getUserByEmail = async (req, res) => {
