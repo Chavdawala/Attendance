@@ -6,7 +6,7 @@ const User = require('../Modules/User');
 const cors = require('cors');
 
 // POST /api/register
-router.post('/register', cors(),  async (req, res) => {
+router.post('/register', async (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {

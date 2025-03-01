@@ -76,19 +76,16 @@ const deleteUser = async (req, res) => {
   const { email } = req.params;
 
   try {
-      if (!email || email === "null") {
-          return res.status(400).json({ message: "Invalid email provided." });
+      if (!email) {
+          return res.status(400).json({ message: "Email is required." });
       }
 
-      console.log("Deleting user with email:", email);
-
+      // Find and update the document by removing the user from the users array
       const result = await UserDetails.findOneAndUpdate(
           { "users.email": email },
           { $pull: { users: { email: email } } },
           { new: true }
       );
-
-      console.log("Delete result:", result);
 
       if (!result) {
           return res.status(404).json({ message: "User not found." });
@@ -100,6 +97,8 @@ const deleteUser = async (req, res) => {
       res.status(500).json({ message: "Server error." });
   }
 };
+
+
 
 
 

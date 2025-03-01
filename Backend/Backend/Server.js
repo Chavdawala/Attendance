@@ -14,7 +14,7 @@ app.use(express.json());
 
 // CORS Configuration
 app.use(cors({
-    origin: "*",  
+    origin: ["http://localhost:5173"],  
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Accept"]
