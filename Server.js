@@ -14,7 +14,7 @@ app.use(express.json());
 
 // CORS Configuration
 app.use(cors({
-    origin: ["http://localhost:5173", "attendance-flf3-git-main-chavdawalas-projects.vercel.app", "attendance-flf3.vercel.app"],  
+    origin: "*",  
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization", "Accept"]
