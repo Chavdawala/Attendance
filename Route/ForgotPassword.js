@@ -31,8 +31,9 @@ router.post("/forgot-password", async (req, res) => {
                 pass: process.env.EMAIL_PASSWORD, 
             },
         });
-        
-        const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`;
+
+        // ✅ Set the reset link to your deployed frontend URL
+        const resetLink = `https://attendance-flf3-git-main-chavdawalas-projects.vercel.app/reset-password?token=${resetToken}`;
 
         const mailOptions = {
             from: process.env.EMAIL,
@@ -40,7 +41,6 @@ router.post("/forgot-password", async (req, res) => {
             subject: "Password Reset Request",
             html: `<p>Click <a href="${resetLink}">here</a> to reset your password. This link expires in 15 minutes.</p>`,
         };
-        
 
         await transporter.sendMail(mailOptions);
 
