@@ -7,7 +7,7 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
 const Home = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
-    const [showPassword, setShowPassword] = useState(false); // 👈 New state
+    const [showPassword, setShowPassword] = useState(false); 
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -101,7 +101,7 @@ const handleGoogleLoginSuccess = async (response) => {
                         <div className="relative">
                             <Lock className="absolute left-3 top-3 text-gray-500" size={20} />
                             <input
-                                type={showPassword ? "text" : "password"} // 👈 Toggle here
+                                type={showPassword ? "text" : "password"} 
                                 name="password"
                                 value={formData.password}
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}

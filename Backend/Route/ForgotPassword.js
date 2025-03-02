@@ -33,7 +33,7 @@ router.post("/forgot-password", async (req, res) => {
         });
 
         // ✅ Set the reset link to your deployed frontend URL
-        const resetLink = `https://attendance-flf3-git-main-chavdawalas-projects.vercel.app/reset-password?token=${resetToken}`;
+        const resetLink = `https://attendance-flf3.vercel.app/reset-password?token=${resetToken}`;
 
         const mailOptions = {
             from: process.env.EMAIL,

@@ -19,6 +19,8 @@ const ResetPassword = () => {
             });
             setMessage(response.data.message);
             setTimeout(() => navigate("/"), 3000);
+            console.log("Token from URL:", token);
+
         } catch (error) {
             setMessage(error.response?.data?.message || "Failed to reset password.");
         }
