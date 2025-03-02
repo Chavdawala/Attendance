@@ -81,6 +81,7 @@ const handleGoogleLoginSuccess = async (response) => {
                 <div className="w-full max-w-sm bg-white p-6 rounded-3xl shadow-2xl">
                     <form className="space-y-6" onSubmit={handleSubmit}>
                         <h2 className="text-center text-black text-2xl font-bold">Login</h2>
+                        <h2> update</h2>
                         {error && <p className="text-red-500 text-center">{error}</p>}
 
                         {/* Email Input */}
