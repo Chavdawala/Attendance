@@ -17,15 +17,19 @@ const ResetPassword = () => {
                 token,
                 password: password.trim(),
             });
+            console.log("response sent", response.data);
+
+            // console.log("Token from URL:", token);
             setMessage(response.data.message);
             setTimeout(() => navigate("/"), 3000);
-            console.log("Token from URL:", token);
+            
 
         } catch (error) {
             setMessage(error.response?.data?.message || "Failed to reset password.");
         }
     };
-    
+    console.log("Sending Reset Request with Token:", token);
+
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-200 px-4">
