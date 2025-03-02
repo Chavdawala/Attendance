@@ -95,39 +95,40 @@ const updateUser = async (req, res) => {
 
 // Delete User
 const deleteUser = async (req, res) => {
+  const session = await UserDetails.startSession();
+  session.startTransaction();
+  
   try {
     const { email } = req.params;
-
     console.log("Received delete request for email:", email);
 
     if (!email || email.trim() === '' || email === "null") {
       return res.status(400).json({ message: "Invalid email provided." });
     }
 
-    // Find the document and filter out any users with null email values
     const result = await UserDetails.findOneAndUpdate(
       { "users.email": email },
-      { 
-        $pull: { users: { email: email } } 
-      },
-      { new: true }
+      { $pull: { users: { email: email } } },
+      { new: true, session } // Run inside transaction
     );
 
-    if (!result) {
-      console.log("User not found in database.");
-      return res.status(404).json({ message: "User not found." });
+    if (!result || !result.users || result.users.length === 0) {
+      console.log("User not found or already deleted:", email);
+      await session.abortTransaction();
+      session.endSession();
+      return res.status(404).json({ message: "User not found or already deleted." });
     }
 
-    // Clean up null emails in case they exist
-    await UserDetails.updateMany(
-      { "users.email": null },
-      { $pull: { users: { email: null } } }
-    );
+    // Commit transaction
+    await session.commitTransaction();
+    session.endSession();
 
     console.log("User deleted successfully:", email);
     res.status(200).json({ message: "User deleted successfully." });
 
   } catch (error) {
+    await session.abortTransaction();
+    session.endSession();
     console.error("Error deleting user:", error.message);
     res.status(500).json({ message: "Server error.", details: error.message });
   }
