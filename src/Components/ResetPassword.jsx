@@ -1,3 +1,6 @@
+
+
+console.log("Reset Password Component Loaded");
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import axios from "axios";
