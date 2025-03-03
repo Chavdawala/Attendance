@@ -5,7 +5,7 @@ const AboutUs = () => {
   return (
     <>
     <Navbar/>
-    <section className="text-gray-600 body-font overflow-hidden bg-sky-100 mt-4">
+    <section className="text-gray-600 body-font overflow-hidden bg-sky-50">
       <div className="container px-5 py-8 mx-auto">
         <div className="lg:w-4/5 mx-auto flex flex-wrap">
           <video className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" autoPlay muted loop>
@@ -76,7 +76,7 @@ const EventsGallery = () => {
 //   const images = ["C1.jpeg", "C2.jpeg", "C3.jpeg", "C4.jpeg", "C5.jpeg", "C6.jpeg"];
   return (
     <>
-    <section className="text-gray-600 body-font bg-sky-100">
+    <section className="text-gray-600 body-font bg-sky-50">
       <div className="container px-5 py-16 mx-auto flex flex-wrap">
         <div className="flex w-full mb-4 flex-wrap">
           <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-4">
