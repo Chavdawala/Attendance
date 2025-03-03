@@ -16,11 +16,11 @@
         ]
       }
     ],
-    "rewrites": [
-      { "source": "/reset-password", "destination": "/index.html" }
-    ],
     "redirects": [
       { "source": "/(.*)", "destination": "/index.html", "statusCode": 200 }
-    ]
+    ],
+    "rewrites": [
+    { "source": "/(.*)", "destination": "/" }
+  ]
   }
   
