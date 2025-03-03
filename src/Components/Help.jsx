@@ -36,24 +36,26 @@ import Footer from './Footer';
   return (
     <>
     <Navbar/>
-    <div className="container mx-auto p-6 max-w-6xl ">
-      <h1 className="text-3xl font-bold text-center mb-6">Welcome to the Career Naksha Help Desk</h1>
-      <p className="text-center mb-8 text-lg text-gray-700">
-        This portal is designed to help employees and interns mark their attendance efficiently.
-      </p>
+    <div className=" w-full p-6 flex justify-center min-h-screen">
+      <div className="max-w-6xl w-full">
+        <h1 className="text-3xl font-bold text-center mb-6">Welcome to the Career Naksha Help Desk</h1>
+        <p className="text-center mb-8 text-lg text-gray-700">
+          This portal is designed to help employees and interns mark their attendance efficiently.
+        </p>
 
-      <div className="grid gap-8 md:grid-cols-2">
-        {helpData.map((item, index) => (
-          <div key={index} className="bg-white shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:bg-blue-200">
-            <img
-              src={item.image}
-              alt={item.title}
-              className="w-full h-72 object-contain rounded-md mb-4 border border-gray-300"
-            />
-            <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
-            <p className="text-gray-600 text-sm">{item.description}</p>
-          </div>
-        ))}
+        <div className="grid gap-8 md:grid-cols-2">
+          {helpData.map((item, index) => (
+            <div key={index} className="shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:bg-sky-50">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-72 object-contain rounded-md mb-4 border border-gray-300"
+              />
+              <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
+              <p className="text-gray-600 text-sm">{item.description}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
     <Email/>

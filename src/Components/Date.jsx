@@ -2,7 +2,7 @@
   import { Link } from "react-router-dom";
   import axios from "axios";
   import Navbar from './Navbar';
-  import Footer from './Footer';
+  // import Footer from './Footer';
   // import './Date.css'
 
   function DateTimeDisplay() {
@@ -110,7 +110,7 @@
     return (
       <>
       <Navbar/>
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-200 p-6">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-sky-50 p-6">
         <div className="bg-white shadow-md p-6 rounded-lg w-full max-w-md">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Store Login Time</h1>
           
@@ -188,7 +188,7 @@
           </div>
         )}
       </div>
-      <Footer/>
+      {/* <Footer/> */}
       </>
     );
   }

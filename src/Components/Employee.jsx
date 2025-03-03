@@ -88,7 +88,7 @@ function AdminDashboard() {
     if (users.length === 0) return <p>Loading user data...</p>;
 
     return (
-        <div className="container mx-auto p-8 bg-gradient-to-b from-white to-blue-200 min-h-screen">
+        <div className="container mx-auto p-8 bg-sky-50 min-h-screen">
             <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Attendance Summary</h1>
             <div className="grid md:grid-cols-2 gap-8">
                 {users.map((user, index) => {

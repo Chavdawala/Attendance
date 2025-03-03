@@ -28,7 +28,44 @@ const CareerNaksha = () => {
   return (
     <>
       {/* Vision & Mission Section */}
-      <section className="bg-sky-100 flex justify-center items-center min-h-fit p-6">
+    {/* Testimonials Section */}
+    <section className="text-gray-600 body-font py-8">
+        <div className="container px-5 mx-auto">
+          <div className="flex flex-col text-center w-full mb-10">
+            <h2 className="text-lg text-gray-500 font-medium">
+              Know how our customers express their love for us
+            </h2>
+            <h1 className="sm:text-4xl text-3xl font-bold title-font text-blue-600 mt-2">
+              Our success stories!
+            </h1>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {testimonialsData.map((testimonial, index) => (
+              <div
+                key={index}
+                className="bg-sky-50 rounded-lg shadow-md p-6 border border-gray-300 hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
+              >
+                <div className="text-blue-600 text-2xl">❝</div>
+                <p className="text-gray-700 mt-2">{testimonial.review}</p>
+                <div className="flex items-center mt-4">
+                  <img src={testimonial.img} alt={testimonial.name} className="w-12 h-12 rounded-full" />
+                  <div className="ml-3">
+                    <p className="font-bold text-gray-900">{testimonial.name}</p>
+                    <p className="text-gray-600 text-sm">{testimonial.designation}</p>
+                  </div>
+                </div>
+                <div className="text-yellow-500 mt-2">★★★★★</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* Vision & Mission Section */}
+
+      <section className="bg-sky-50 flex justify-center items-center min-h-fit p-6 mb-4">
         <div className="text-center">
           <h2 className="text-gray-600 text-2xl font-semibold">Vision - Mission</h2>
           <h1 className="text-2xl md:text-3xl font-bold text-blue-600 mt-2">
@@ -38,7 +75,7 @@ const CareerNaksha = () => {
 
           <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Vision Card */}
-            <div className="bg-white rounded-lg p-6 flex flex-col items-center text-center hover: hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
+            <div className="bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="flex items-center">
                 {"VISION".split("").map((letter, index) => (
                   <span
@@ -55,7 +92,7 @@ const CareerNaksha = () => {
             </div>
 
             {/* Mission Card */}
-            <div className="bg-white rounded-lg p-6 flex flex-col items-center text-center hover: hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
+            <div className= "bg-white shadow-lg rounded-lg p-6 flex flex-col items-center text-center hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out">
               <div className="flex items-center">
                 {"MISSION".split("").map((letter, index) => (
                   <span
@@ -71,40 +108,6 @@ const CareerNaksha = () => {
                 Personalised Data-Driven Career Counselling, Guidance & Skilling Platform.
               </p>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="text-gray-600 body-font py-16">
-        <div className="container px-5 mx-auto">
-          <div className="flex flex-col text-center w-full mb-10">
-            <h2 className="text-lg text-gray-500 font-medium">
-              Know how our customers express their love for us
-            </h2>
-            <h1 className="sm:text-4xl text-3xl font-bold title-font text-blue-600 mt-2">
-              Our success stories!
-            </h1>
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            {testimonialsData.map((testimonial, index) => (
-              <div
-                key={index}
-                className="bg-sky-100 rounded-lg shadow-md p-6 border border-gray-300 hover:bg-sky-200 hover:shadow-lg hover:scale-105 transition-transform duration-300 ease-in-out"
-              >
-                <div className="text-blue-600 text-2xl">❝</div>
-                <p className="text-gray-700 mt-2">{testimonial.review}</p>
-                <div className="flex items-center mt-4">
-                  <img src={testimonial.img} alt={testimonial.name} className="w-12 h-12 rounded-full" />
-                  <div className="ml-3">
-                    <p className="font-bold text-gray-900">{testimonial.name}</p>
-                    <p className="text-gray-600 text-sm">{testimonial.designation}</p>
-                  </div>
-                </div>
-                <div className="text-yellow-500 mt-2">★★★★★</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
-import Footer from "./Footer";
+// import Footer from "./Footer";
 
 function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
@@ -98,7 +98,7 @@ function DateTimeDisplay() {
   return (
     <>
       <Navbar />
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-blue-200 p-6">
+      <div className="min-h-screen flex flex-col items-center justify-center bg-sky-50 p-6">
         <div className="bg-white shadow-md p-6 rounded-lg w-full max-w-md">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Store Logout Time</h1>
           
@@ -175,7 +175,7 @@ function DateTimeDisplay() {
           </div>
         )}
       </div>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   );
 }
