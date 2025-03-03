@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from './Navbar';
-import Footer from '../Components/Footer';
+// import Footer from '../Components/Footer';
 // import "./ShowData.css";
 
 const ShowData = () => {
@@ -58,7 +58,7 @@ const ShowData = () => {
   return (
     <>
     <Navbar/>
-    <div className="container mx-auto p-4 sm:p-6 bg-gradient-to-b from-white to-blue-200">
+    <div className="container mx-auto p-4 sm:p-6 bg-sky-50">
         <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Employee Onboarding
         </h2>
@@ -182,7 +182,7 @@ const ShowData = () => {
           </div>
         )}
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
