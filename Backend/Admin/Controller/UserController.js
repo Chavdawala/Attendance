@@ -94,10 +94,11 @@ const updateUser = async (req, res) => {
 };
 
 // Delete User
+// Delete all user data related to an email
 const deleteUser = async (req, res) => {
   const session = await UserDetails.startSession();
   session.startTransaction();
-  
+
   try {
     const { email } = req.params;
     console.log("Received delete request for email:", email);
@@ -106,25 +107,29 @@ const deleteUser = async (req, res) => {
       return res.status(400).json({ message: "Invalid email provided." });
     }
 
-    const result = await UserDetails.findOneAndUpdate(
+    // Remove the user from all departments
+    const result = await UserDetails.updateMany(
       { "users.email": email },
       { $pull: { users: { email: email } } },
-      { new: true, session } // Run inside transaction
+      { session }
     );
 
-    if (!result || !result.users || result.users.length === 0) {
-      console.log("User not found or already deleted:", email);
+    if (result.modifiedCount === 0) {
+      console.log("User not found:", email);
       await session.abortTransaction();
       session.endSession();
-      return res.status(404).json({ message: "User not found or already deleted." });
+      return res.status(404).json({ message: "User not found." });
     }
+
+    // Remove empty departments (if a department has no users left)
+    await UserDetails.deleteMany({ users: { $size: 0 } }, { session });
 
     // Commit transaction
     await session.commitTransaction();
     session.endSession();
 
-    console.log("User deleted successfully:", email);
-    res.status(200).json({ message: "User deleted successfully." });
+    console.log("User and related data deleted successfully:", email);
+    res.status(200).json({ message: "User and all related data deleted successfully." });
 
   } catch (error) {
     await session.abortTransaction();

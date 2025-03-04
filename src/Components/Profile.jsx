@@ -78,6 +78,11 @@ function Profile() {  // 🔹 FIX: Renamed function from DisplayData to Profile
           <span>City : {data?.user?.City || "N/A"}</span>
         </div>
 
+        {/* <div className="flex items-center space-x-3 text-gray-700">
+          <FaBriefcase className="text-blue-500 text-lg" />
+          <span>City : {data?.user?.City || "N/A"}</span>
+        </div> */}
+
         <div className="flex items-center space-x-3 text-gray-700">
           <FaBriefcase className="text-blue-500 text-lg" />
           <span>Phone: {data?.user?.phone || "N/A"}</span>
