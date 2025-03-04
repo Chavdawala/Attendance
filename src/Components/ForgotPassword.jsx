@@ -49,7 +49,7 @@ const ForgotPassword =() => {
             type="submit"
             className="w-full py-3 border text-white font-semibold border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 transition duration-200 shadow-md"
           >
-            Reset
+            Send
           </button>
         </form>
       </div>
