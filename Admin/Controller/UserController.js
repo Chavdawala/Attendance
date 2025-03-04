@@ -81,12 +81,9 @@ const deleteUser = async (req, res) => {
           return res.status(400).json({ message: "Email is required." });
       }
 
-      // Trim and convert email to lowercase to avoid case and space issues
       email = email.trim().toLowerCase();
-
       console.log(`🟡 Attempting to delete user with email: ${email}`);
 
-      // Find all departments that contain this email
       const userDocuments = await UserDetails.find({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
 
       if (userDocuments.length === 0) {
@@ -96,14 +93,15 @@ const deleteUser = async (req, res) => {
 
       console.log(`🔹 Found user in ${userDocuments.length} department(s), proceeding with deletion.`);
 
-      // Loop through all departments and remove the user
       let deleteSuccess = false;
       for (let doc of userDocuments) {
           const updatedDoc = await UserDetails.findOneAndUpdate(
-              { _id: doc._id },
-              { $pull: { users: { email } } },
+              { _id: doc._id, "users.email": { $regex: new RegExp(`^${email}$`, "i") } },
+              { $pull: { users: { email: { $regex: new RegExp(`^${email}$`, "i") } } } },
               { new: true }
           );
+
+          console.log(`Updated document after deletion:`, updatedDoc);
 
           if (updatedDoc) {
               console.log(`✅ Successfully deleted user from department: ${doc.department}`);
@@ -119,7 +117,7 @@ const deleteUser = async (req, res) => {
       res.status(200).json({ message: "User deleted successfully from all departments." });
 
   } catch (error) {
-      console.error("❌ Error deleting user:", error);
+      console.error("❌ Error deleting user:", error.stack);
       res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
