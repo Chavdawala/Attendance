@@ -98,33 +98,27 @@ const handleGoogleLoginSuccess = async (response) => {
                     </div>
 
                     {/* Password Input */}
-                    <div className="relative">
-                        <Lock className="absolute left-3 top-3 text-gray-500" size={20} />
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            name="password"
-                            value={formData.password}
-                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                            placeholder="Password"
-                            required
-                            className="w-full pl-10 py-3 text-gray-700 border border-gray-300 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                    </div>
+                    <div className="relative flex items-center border rounded-md p-2">
+      <Lock className="absolute left-3 text-gray-500" size={20} />
+      <input
+        type={showPassword ? "text" : "password"}
+        placeholder="New Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full pl-10 pr-10 text-gray-700 focus:outline-none"
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 text-gray-500"
+      >
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+      </button>
+    </div>
 
                     {/* Show Password and Forgot Password Link in Same Row */}
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                type="checkbox"
-                                id="showPassword"
-                                checked={showPassword}
-                                onChange={() => setShowPassword(!showPassword)}
-                                className="mr-2"
-                            />
-                            <label htmlFor="showPassword" className="text-sm text-gray-600">
-                                Show Password
-                            </label>
-                        </div>
+                       
 
                         <Link to="/forgot-password" className="text-sm text-gray-600 hover:underline">
                             Forgot Password?
