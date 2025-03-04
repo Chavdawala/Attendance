@@ -84,28 +84,39 @@ const deleteUser = async (req, res) => {
       // Trim and convert email to lowercase to avoid case and space issues
       email = email.trim().toLowerCase();
 
-      console.log(`Attempting to delete user with email: ${email}`);
+      console.log(`🟡 Attempting to delete user with email: ${email}`);
 
-      // Use case-insensitive regex to ensure accurate matching
-      const userExists = await UserDetails.findOne({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
+      // Find all departments that contain this email
+      const userDocuments = await UserDetails.find({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
 
-      if (!userExists) {
+      if (userDocuments.length === 0) {
+          console.log("⚠️ User not found in any department.");
           return res.status(404).json({ message: "User not found." });
       }
 
-      // Remove user from UserDetails schema
-      const result = await UserDetails.findOneAndUpdate(
-          { "users.email": { $regex: new RegExp(`^${email}$`, "i") } },
-          { $pull: { users: { email } } },
-          { new: true }
-      );
+      console.log(`🔹 Found user in ${userDocuments.length} department(s), proceeding with deletion.`);
 
-      if (!result) {
+      // Loop through all departments and remove the user
+      let deleteSuccess = false;
+      for (let doc of userDocuments) {
+          const updatedDoc = await UserDetails.findOneAndUpdate(
+              { _id: doc._id },
+              { $pull: { users: { email } } },
+              { new: true }
+          );
+
+          if (updatedDoc) {
+              console.log(`✅ Successfully deleted user from department: ${doc.department}`);
+              deleteSuccess = true;
+          }
+      }
+
+      if (!deleteSuccess) {
+          console.log("⚠️ User deletion failed.");
           return res.status(404).json({ message: "User not found or already deleted." });
       }
 
-      console.log(`✅ User deleted successfully: ${email}`);
-      res.status(200).json({ message: "User deleted successfully." });
+      res.status(200).json({ message: "User deleted successfully from all departments." });
 
   } catch (error) {
       console.error("❌ Error deleting user:", error);
