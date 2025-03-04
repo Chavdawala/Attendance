@@ -103,7 +103,7 @@ const handleGoogleLoginSuccess = async (response) => {
       <input
         type={showPassword ? "text" : "password"}
         placeholder="New Password"
-        value={password}
+        value={formData.password}
         onChange={(e) => setPassword(e.target.value)}
         className="w-full pl-10 pr-10 text-gray-700 focus:outline-none"
       />
