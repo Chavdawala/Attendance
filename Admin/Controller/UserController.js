@@ -77,48 +77,56 @@ const deleteUser = async (req, res) => {
   let { email } = req.params;
 
   try {
-      if (!email) {
-          return res.status(400).json({ message: "Email is required." });
+    if (!email) {
+      return res.status(400).json({ message: "Email is required." });
+    }
+
+    // Normalize email (trim spaces, convert to lowercase)
+    email = email.trim().toLowerCase();
+    console.log(`🟡 Attempting to delete user with email: ${email}`);
+
+    // Find departments containing this user
+    const userDocuments = await UserDetails.find({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
+
+    if (userDocuments.length === 0) {
+      console.log("⚠️ User not found in any department.");
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    console.log(`🔹 Found user in ${userDocuments.length} department(s), proceeding with deletion.`);
+
+    let deleteSuccess = false;
+    for (let doc of userDocuments) {
+      const updatedDoc = await UserDetails.findOneAndUpdate(
+        { _id: doc._id },
+        { $pull: { users: { email } } },
+        { new: true }
+      );
+
+      if (!updatedDoc) {
+        console.log(`❌ Failed to delete user from department: ${doc.department}`);
+      } else {
+        console.log(`✅ Successfully deleted user from department: ${doc.department}`);
+        deleteSuccess = true;
+
+        // 🛑 NEW FIX: Ensure users array is never empty
+        if (updatedDoc.users.length === 0) {
+          console.log(`⚠️ No users left in department: ${doc.department}, handling cleanup.`);
+          await UserDetails.deleteOne({ _id: doc._id });
+        }
       }
+    }
 
-      email = email.trim().toLowerCase();
-      console.log(`🟡 Attempting to delete user with email: ${email}`);
+    if (!deleteSuccess) {
+      console.log("⚠️ User deletion failed.");
+      return res.status(500).json({ message: "User deletion failed." });
+    }
 
-      const userDocuments = await UserDetails.find({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
-
-      if (userDocuments.length === 0) {
-          console.log("⚠️ User not found in any department.");
-          return res.status(404).json({ message: "User not found." });
-      }
-
-      console.log(`🔹 Found user in ${userDocuments.length} department(s), proceeding with deletion.`);
-
-      let deleteSuccess = false;
-      for (let doc of userDocuments) {
-          const updatedDoc = await UserDetails.findOneAndUpdate(
-              { _id: doc._id, "users.email": { $regex: new RegExp(`^${email}$`, "i") } },
-              { $pull: { users: { email: { $regex: new RegExp(`^${email}$`, "i") } } } },
-              { new: true }
-          );
-
-          console.log(`Updated document after deletion:`, updatedDoc);
-
-          if (updatedDoc) {
-              console.log(`✅ Successfully deleted user from department: ${doc.department}`);
-              deleteSuccess = true;
-          }
-      }
-
-      if (!deleteSuccess) {
-          console.log("⚠️ User deletion failed.");
-          return res.status(404).json({ message: "User not found or already deleted." });
-      }
-
-      res.status(200).json({ message: "User deleted successfully from all departments." });
+    res.status(200).json({ message: "User deleted successfully from all departments." });
 
   } catch (error) {
-      console.error("❌ Error deleting user:", error.stack);
-      res.status(500).json({ message: "Server error.", error: error.message });
+    console.error("❌ Error deleting user:", error);
+    res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
 
