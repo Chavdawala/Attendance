@@ -1,5 +1,6 @@
 const UserDetails = require('../Models/UserSchema');
 
+
 // Save User Data (Grouped by Department)
 const saveUser = async (req, res) => {
   try {
@@ -82,18 +83,17 @@ const deleteUser = async (req, res) => {
 
       console.log(`Attempting to delete user with email: ${email}`);
 
-      // Ensure the user exists before attempting deletion
+      // Check if user exists in UserDetails
       const userExists = await UserDetails.findOne({ "users.email": email });
 
       if (!userExists) {
-          console.warn(`User not found: ${email}`);
           return res.status(404).json({ message: "User not found." });
       }
 
-      // Perform the deletion
+      // Remove user from UserDetails schema only
       const result = await UserDetails.findOneAndUpdate(
           { "users.email": email },
-          { $pull: { users: { email } } }, // Remove the specific user
+          { $pull: { users: { email } } },
           { new: true }
       );
 
@@ -101,28 +101,14 @@ const deleteUser = async (req, res) => {
           return res.status(404).json({ message: "User not found or already deleted." });
       }
 
-      // 🔥 Fix potential unique index conflicts 🔥
-      await UserDetails.updateMany(
-          { "users.email": null },  // Find documents with null emails
-          { $pull: { users: { email: null } } } // Remove null email entries
-      );
-
       console.log(`User deleted successfully: ${email}`);
       res.status(200).json({ message: "User deleted successfully." });
 
   } catch (error) {
       console.error("Error deleting user:", error);
-
-      // Handle MongoDB duplicate key error specifically
-      if (error.code === 11000) {
-          return res.status(409).json({ message: "Conflict: Duplicate email issue detected." });
-      }
-
       res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
-
-
 
 
 
