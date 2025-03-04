@@ -74,16 +74,19 @@ const updateUser = async (req, res) => {
 
 // Delete User
 const deleteUser = async (req, res) => {
-  const { email } = req.params;
+  let { email } = req.params;
 
   try {
       if (!email) {
           return res.status(400).json({ message: "Email is required." });
       }
 
+      // Trim and convert email to lowercase to avoid case and space issues
+      email = email.trim().toLowerCase();
+
       console.log(`Attempting to delete user with email: ${email}`);
 
-      // Use case-insensitive regex to ensure matching
+      // Use case-insensitive regex to ensure accurate matching
       const userExists = await UserDetails.findOne({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
 
       if (!userExists) {
