@@ -1,5 +1,6 @@
 const UserDetails = require('../Models/UserSchema');
 
+
 // Save User Data (Grouped by Department)
 const saveUser = async (req, res) => {
   try {
@@ -80,25 +81,34 @@ const deleteUser = async (req, res) => {
           return res.status(400).json({ message: "Email is required." });
       }
 
-      // Find and update the document by removing the user from the users array
+      console.log(`Attempting to delete user with email: ${email}`);
+
+      // Check if user exists in UserDetails
+      const userExists = await UserDetails.findOne({ "users.email": email });
+
+      if (!userExists) {
+          return res.status(404).json({ message: "User not found." });
+      }
+
+      // Remove user from UserDetails schema only
       const result = await UserDetails.findOneAndUpdate(
           { "users.email": email },
-          { $pull: { users: { email: email } } },
+          { $pull: { users: { email } } },
           { new: true }
       );
 
       if (!result) {
-          return res.status(404).json({ message: "User not found." });
+          return res.status(404).json({ message: "User not found or already deleted." });
       }
 
+      console.log(`User deleted successfully: ${email}`);
       res.status(200).json({ message: "User deleted successfully." });
+
   } catch (error) {
       console.error("Error deleting user:", error);
-      res.status(500).json({ message: "Server error." });
+      res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
-
-
 
 
 

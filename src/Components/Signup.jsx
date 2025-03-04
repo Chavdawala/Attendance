@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Eye, EyeOff } from "lucide-react"; 
 import { User, Mail, Lock } from "lucide-react"; 
 
 function Signup() {
@@ -76,31 +77,23 @@ function Signup() {
             />
           </div>
 
-          {/* Password Input */}
-          <div className="relative flex items-center">
-            <Lock className="absolute left-3 text-gray-500" size={20} />
-            <input
-              type={showPassword ? "text" : "password"} 
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full p-2 pl-10 border rounded-md focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          {/* Show Password Checkbox */}
-          <div className="flex items-center">
-            <input
-              type="checkbox"
-              id="showPassword"
-              checked={showPassword} 
-              onChange={() => setShowPassword(!showPassword)} 
-              className="mr-2"
-            />
-            <label htmlFor="showPassword" className="text-sm text-gray-600">
-              Show Password
-            </label>
-          </div>
+          <div className="relative flex items-center border rounded-md p-2">
+      <Lock className="absolute left-3 text-gray-500" size={20} />
+      <input
+        type={showPassword ? "text" : "password"}
+        placeholder="New Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        className="w-full pl-10 pr-10 text-gray-700 focus:outline-none"
+      />
+      <button
+        type="button"
+        onClick={() => setShowPassword(!showPassword)}
+        className="absolute right-3 text-gray-500"
+      >
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+      </button>
+    </div>
 
           <button
             type="submit"
