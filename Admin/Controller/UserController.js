@@ -80,21 +80,24 @@ const deleteUser = async (req, res) => {
           return res.status(400).json({ message: "Email is required." });
       }
 
-      // Find and update the document by removing the user from the users array
+      console.log(`Deleting user with email: ${email}`);
+
+      // Find the document and remove the user from the array
       const result = await UserDetails.findOneAndUpdate(
-          { "users.email": email },
-          { $pull: { users: { email: email } } },
-          { new: true }
+          { "users.email": email }, // Find the document containing the user
+          { $pull: { users: { email: email } } }, // Remove the specific user
+          { new: true } // Return the updated document
       );
 
       if (!result) {
+          console.warn(`User not found: ${email}`);
           return res.status(404).json({ message: "User not found." });
       }
 
       res.status(200).json({ message: "User deleted successfully." });
   } catch (error) {
       console.error("Error deleting user:", error);
-      res.status(500).json({ message: "Server error." });
+      res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
 
