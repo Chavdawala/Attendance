@@ -3,12 +3,7 @@ const UserDetails = require('../Models/UserSchema');
 // Save User Data (Grouped by Department)
 const saveUser = async (req, res) => {
   try {
-    const { department, email, firstname, lastname, Birthdate, City, secondemail, phone, jobtype, joinDate, internshipDuration, contractDuration, endDate, shift, startTime, endTime } = req.body;
-
-    // Validate email to avoid duplicate key errors
-    if (!email || email.trim() === '') {
-      return res.status(400).json({ error: "Email is required." });
-    }
+    const { department , email, firstname, lastname, Birthdate, City, secondemail, phone, jobtype, joinDate, internshipDuration, contractDuration, endDate, shift, startTime, endTime } = req.body; 
 
     const user = {
       firstname,
@@ -27,59 +22,42 @@ const saveUser = async (req, res) => {
       startTime,
       endTime,
     };
+    
+    const newData = {
+      department,
+      users: [user],
+    };
 
-    const existingDepartment = await UserDetails.findOne({ department });
+    const result = await UserDetails.insertMany(newData);
 
-    if (existingDepartment) {
-      // Check if user already exists
-      const userExists = existingDepartment.users.some(user => user.email === email);
-      
-      if (userExists) {
-        return res.status(400).json({ error: "User with this email already exists in this department." });
-      }
-
-      // Add new user to the existing department
-      existingDepartment.users.push(user);
-      await existingDepartment.save();
-      return res.status(200).json({ message: "User added successfully!", user });
-    }
-
-    // If department does not exist, create a new one
-    const newData = new UserDetails({ department, users: [user] });
-    await newData.save();
-
-    res.status(200).json({ message: "User saved successfully!", newData });
+    res.status(200).json({ message: 'User saved successfully!', result });
   } catch (error) {
     console.error("Error saving user data:", error.message);
-    res.status(500).json({ error: "Error saving user data", details: error.message });
+    res.status(500).json({ error: 'Error saving user data', details: error.message });
   }
 };
 
 // Fetch all users
 const getUsers = async (req, res) => {
   try {
-    const data = await UserDetails.find();
+    const data = await UserDetails.find(); 
     res.status(200).json(data);
   } catch (error) {
     console.error("Error fetching users:", error.message);
-    res.status(500).json({ error: "Error fetching users", details: error.message });
+    res.status(500).json({ error: 'Error fetching users', details: error.message });
   }
 };
 
 // Update User Data
 const updateUser = async (req, res) => {
   try {
-    const { email } = req.params;
-    const updatedData = req.body;
-
-    if (!email || email.trim() === '') {
-      return res.status(400).json({ message: "Invalid email provided." });
-    }
+    const { email } = req.params; // Get email from URL
+    const updatedData = req.body; // New user data
 
     const user = await UserDetails.findOneAndUpdate(
-      { "users.email": email }, 
-      { $set: { "users.$": updatedData } }, 
-      { new: true }
+      { "users.email": email }, // Find user by email
+      { $set: { "users.$": updatedData } }, // Update user data
+      { new: true } // Return updated data
     );
 
     if (!user) {
@@ -94,81 +72,66 @@ const updateUser = async (req, res) => {
 };
 
 // Delete User
-// Delete all user data related to an email
 const deleteUser = async (req, res) => {
-  const session = await UserDetails.startSession();
-  session.startTransaction();
+  const { email } = req.params;
 
   try {
-    const { email } = req.params;
-    console.log("Received delete request for email:", email);
+      if (!email) {
+          return res.status(400).json({ message: "Email is required." });
+      }
 
-    if (!email || email.trim() === '' || email === "null") {
-      return res.status(400).json({ message: "Invalid email provided." });
-    }
+      // Find and update the document by removing the user from the users array
+      const result = await UserDetails.findOneAndUpdate(
+          { "users.email": email },
+          { $pull: { users: { email: email } } },
+          { new: true }
+      );
 
-    // Remove the user from all departments
-    const result = await UserDetails.updateMany(
-      { "users.email": email },
-      { $pull: { users: { email: email } } },
-      { session }
-    );
+      if (!result) {
+          return res.status(404).json({ message: "User not found." });
+      }
 
-    if (result.modifiedCount === 0) {
-      console.log("User not found:", email);
-      await session.abortTransaction();
-      session.endSession();
-      return res.status(404).json({ message: "User not found." });
-    }
-
-    // Remove empty departments (if a department has no users left)
-    await UserDetails.deleteMany({ users: { $size: 0 } }, { session });
-
-    // Commit transaction
-    await session.commitTransaction();
-    session.endSession();
-
-    console.log("User and related data deleted successfully:", email);
-    res.status(200).json({ message: "User and all related data deleted successfully." });
-
+      res.status(200).json({ message: "User deleted successfully." });
   } catch (error) {
-    await session.abortTransaction();
-    session.endSession();
-    console.error("Error deleting user:", error.message);
-    res.status(500).json({ message: "Server error.", details: error.message });
+      console.error("Error deleting user:", error);
+      res.status(500).json({ message: "Server error." });
   }
 };
+
+
+
+
+
 
 
 // Fetch a user by email
 const getUserByEmail = async (req, res) => {
   try {
-    const { email } = req.params;
+    const { email } = req.params; // Get email from request params
 
-    if (!email || email.trim() === '') {
-      return res.status(400).json({ error: "Invalid email provided." });
-    }
-
+    // Find the user along with the department
     const userData = await UserDetails.findOne(
       { "users.email": email }, 
-      { department: 1, "users.$": 1 } 
+      { department: 1, "users.$": 1 } // Include department in the response
     );
 
     if (!userData) {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // Return both department and user details
     res.status(200).json({ department: userData.department, user: userData.users[0] });
   } catch (error) {
     console.error("Error fetching user data:", error.message);
-    res.status(500).json({ error: "Error fetching user data", details: error.message });
+    res.status(500).json({ error: 'Error fetching user data', details: error.message });
   }
 };
+
 
 module.exports = {
   saveUser,
   getUsers,
   updateUser,
   deleteUser,
-  getUserByEmail,
+  getUserByEmail, // Export 
 };
