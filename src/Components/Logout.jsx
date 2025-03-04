@@ -131,7 +131,7 @@ function DateTimeDisplay() {
                      <h2 className="text-lg font-bold text-gray-700">Log Your Time</h2>
                      <p className="text-gray-600"> Log out with name & email. See your summary by clicking "Attendance." <br/>
                           <br/>
-                       <Link  className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-500 font-bold" to ='/displayRecord' > Attendance</Link>
+                       <Link  className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-500 font-bold" to ='/index' > Attendance</Link>
                      </p>
                    </div>
 
