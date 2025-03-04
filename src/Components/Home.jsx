@@ -77,42 +77,42 @@ const handleGoogleLoginSuccess = async (response) => {
 
     return (
         <GoogleOAuthProvider clientId={googleClientId}>
-            <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-200 px-4">
-                <div className="w-full max-w-sm bg-white p-6 rounded-3xl shadow-2xl">
-                    <form className="space-y-6" onSubmit={handleSubmit}>
-                        <h2 className="text-center text-black text-2xl font-bold">Login</h2>
-                       
-                        {error && <p className="text-red-500 text-center">{error}</p>}
+        <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white to-blue-200 px-4">
+            <div className="w-full max-w-sm bg-white p-6 rounded-3xl shadow-2xl">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                    <h2 className="text-center text-black text-2xl font-bold">Login</h2>
+                    {error && <p className="text-red-500 text-center">{error}</p>}
 
-                        {/* Email Input */}
-                        <div className="relative">
-                            <Mail className="absolute left-3 top-3 text-gray-500" size={20} />
-                            <input
-                                type="email"
-                                name="email"
-                                value={formData.email}
-                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                placeholder="Email"
-                                required
-                                className="w-full pl-10 py-3 text-gray-700 border border-gray-300 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
+                    {/* Email Input */}
+                    <div className="relative">
+                        <Mail className="absolute left-3 top-3 text-gray-500" size={20} />
+                        <input
+                            type="email"
+                            name="email"
+                            value={formData.email}
+                            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                            placeholder="Email"
+                            required
+                            className="w-full pl-10 py-3 text-gray-700 border border-gray-300 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
 
-                        {/* Password Input */}
-                        <div className="relative">
-                            <Lock className="absolute left-3 top-3 text-gray-500" size={20} />
-                            <input
-                                type={showPassword ? "text" : "password"} 
-                                name="password"
-                                value={formData.password}
-                                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                                placeholder="Password"
-                                required
-                                className="w-full pl-10 py-3 text-gray-700 border border-gray-300 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                            />
-                        </div>
+                    {/* Password Input */}
+                    <div className="relative">
+                        <Lock className="absolute left-3 top-3 text-gray-500" size={20} />
+                        <input
+                            type={showPassword ? "text" : "password"}
+                            name="password"
+                            value={formData.password}
+                            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                            placeholder="Password"
+                            required
+                            className="w-full pl-10 py-3 text-gray-700 border border-gray-300 bg-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
 
-                        {/* Show Password Checkbox */}
+                    {/* Show Password and Forgot Password Link in Same Row */}
+                    <div className="flex items-center justify-between">
                         <div className="flex items-center">
                             <input
                                 type="checkbox"
@@ -126,45 +126,47 @@ const handleGoogleLoginSuccess = async (response) => {
                             </label>
                         </div>
 
-                        {/* Submit Button */}
-                        <button
-                            type="submit"
-                            className="w-full py-3 border text-white font-bold border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 transition duration-200"
-                        >
-                            LOGIN
-                        </button>
+                        <Link to="/forgot-password" className="text-sm text-gray-600 hover:underline">
+                            Forgot Password?
+                        </Link>
+                    </div>
 
-                        {/* Google Login Button */}
-                        <div className="flex justify-center">
-                            <GoogleLogin
-                                onSuccess={handleGoogleLoginSuccess}
-                                onError={handleGoogleLoginFailure}
-                            />
-                        </div>
+                    {/* Submit Button */}
+                    <button
+                    type="submit"
+                    className="w-full h-12 border text-white font-bold border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 transition duration-200" // Reduced gap using mb-2
+                    >
+                    LOGIN
+                    </button>
 
-                        <p className="text-center text-sm text-gray-600">
-                            Login As an Admin{" "}
-                            <Link to="/AdminLogin" className="text-blue-500 hover:underline">
-                                Admin
-                            </Link>
-                        </p>
+                    {/* Google Login Button */}
+                    <div className="w-full h-12 flex items-center justify-center rounded-lg bg-white">
+                        <GoogleLogin
+                            onSuccess={handleGoogleLoginSuccess}
+                            onError={handleGoogleLoginFailure}
+                            className="w-full h-full flex justify-center items-center"
+                        />
+                    </div>
 
-                        <div className="text-center my-4">
-                            <Link to="/forgot-password" className="text-sm text-blue-500 hover:underline">
-                                Forgot Password?
-                            </Link>
-                        </div>
+                    {/* Admin Login */}
+                    <p className="text-center text-sm text-gray-600">
+                        Login as{" "}
+                        <Link to="/AdminLogin" className="text-blue-500 hover:underline">
+                            Admin?
+                        </Link>
+                    </p>
 
-                        <p className="text-center text-sm text-gray-600">
-                            Don't have an account?{" "}
-                            <Link to="/signup" className="text-blue-500 hover:underline">
-                                Create Your Account
-                            </Link>
-                        </p>
-                    </form>
-                </div>
+                    {/* Signup Link */}
+                    <p className="text-center text-sm text-gray-600">
+                        Don't have account?{" "}
+                        <Link to="/signup" className="text-blue-500 hover:underline">
+                            Create Your Account?
+                        </Link>
+                    </p>
+                </form>
             </div>
-        </GoogleOAuthProvider>
+        </div>
+    </GoogleOAuthProvider>
     );
 };
 
