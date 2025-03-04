@@ -51,6 +51,12 @@ const ForgotPassword =() => {
           >
             Send
           </button>
+
+          <p className="text-center mt-4 text-black">
+          <Link to="/home" className="text-blue-500 cursor-pointer hover:underline">
+            Employee Login
+          </Link>
+        </p>
         </form>
       </div>
     </div>
