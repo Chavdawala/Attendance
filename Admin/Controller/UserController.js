@@ -92,7 +92,7 @@ const deleteUser = async (req, res) => {
 
       // Perform the deletion
       const result = await UserDetails.findOneAndUpdate(
-          { "users.email": email }, // Find the document containing the user
+          { "users.email": email },
           { $pull: { users: { email } } }, // Remove the specific user
           { new: true }
       );
@@ -100,6 +100,12 @@ const deleteUser = async (req, res) => {
       if (!result) {
           return res.status(404).json({ message: "User not found or already deleted." });
       }
+
+      // 🔥 Fix potential unique index conflicts 🔥
+      await UserDetails.updateMany(
+          { "users.email": null },  // Find documents with null emails
+          { $pull: { users: { email: null } } } // Remove null email entries
+      );
 
       console.log(`User deleted successfully: ${email}`);
       res.status(200).json({ message: "User deleted successfully." });
@@ -109,7 +115,7 @@ const deleteUser = async (req, res) => {
 
       // Handle MongoDB duplicate key error specifically
       if (error.code === 11000) {
-          return res.status(409).json({ message: "Duplicate key error: Email must be unique." });
+          return res.status(409).json({ message: "Conflict: Duplicate email issue detected." });
       }
 
       res.status(500).json({ message: "Server error.", error: error.message });
