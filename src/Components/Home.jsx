@@ -4,6 +4,8 @@ import axios from "axios";
 import { Mail, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { Eye, EyeOff } from "lucide-react";
+
 
 const Home = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
