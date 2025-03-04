@@ -80,23 +80,38 @@ const deleteUser = async (req, res) => {
           return res.status(400).json({ message: "Email is required." });
       }
 
-      console.log(`Deleting user with email: ${email}`);
+      console.log(`Attempting to delete user with email: ${email}`);
 
-      // Find the document and remove the user from the array
-      const result = await UserDetails.findOneAndUpdate(
-          { "users.email": email }, // Find the document containing the user
-          { $pull: { users: { email: email } } }, // Remove the specific user
-          { new: true } // Return the updated document
-      );
+      // Ensure the user exists before attempting deletion
+      const userExists = await UserDetails.findOne({ "users.email": email });
 
-      if (!result) {
+      if (!userExists) {
           console.warn(`User not found: ${email}`);
           return res.status(404).json({ message: "User not found." });
       }
 
+      // Perform the deletion
+      const result = await UserDetails.findOneAndUpdate(
+          { "users.email": email }, // Find the document containing the user
+          { $pull: { users: { email } } }, // Remove the specific user
+          { new: true }
+      );
+
+      if (!result) {
+          return res.status(404).json({ message: "User not found or already deleted." });
+      }
+
+      console.log(`User deleted successfully: ${email}`);
       res.status(200).json({ message: "User deleted successfully." });
+
   } catch (error) {
       console.error("Error deleting user:", error);
+
+      // Handle MongoDB duplicate key error specifically
+      if (error.code === 11000) {
+          return res.status(409).json({ message: "Duplicate key error: Email must be unique." });
+      }
+
       res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
