@@ -12,7 +12,7 @@ function Card() {
     gsap.from(headingRef.current, {
       opacity: 0,
       y: 50,
-      duration: 0.6, // Decreased duration
+      duration: 1, // Decreased duration
       ease: "power2.out",
       scrollTrigger: {
         trigger: headingRef.current,
