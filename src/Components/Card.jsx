@@ -12,7 +12,7 @@ function Card() {
     gsap.from(headingRef.current, {
       opacity: 0,
       y: 50,
-      duration: 1,
+      duration: 0.6, // Decreased duration
       ease: "power2.out",
       scrollTrigger: {
         trigger: headingRef.current,
@@ -24,13 +24,13 @@ function Card() {
     cardsRef.current.forEach((card, index) => {
       gsap.from(card, {
         opacity: 0,
-        y: index % 2 === 0 ? -200 : 200, // Alternating top and bottom entry
+        y: index % 2 === 0 ? -150 : 150, // Alternate directions (reduced distance)
         scaleY: 0,
-        duration: 1,
+        duration: 0.6, // Faster animation
         ease: "power2.out",
         scrollTrigger: {
           trigger: card,
-          start: "top 85%",
+          start: "top 90%", // Triggers earlier as user scrolls
           toggleActions: "play none none none",
         },
       });
@@ -49,7 +49,7 @@ function Card() {
 
       {/* Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-        {[ 
+        {[
           { img: "g1.png", title: "Career Development & Growth", desc: "Empower employees with career planning, upskilling programs, and mentorship opportunities to help them grow within the company." },
           { img: "g2.png", title: "Performance & Skill Enhancement", desc: "Track employee performance, identify skill gaps, and provide training programs for continuous professional development." },
           { img: "g3.png", title: "Career Pathway & Promotions", desc: "Guide employees on career progression within the company, offering clear pathways for promotions and role advancements." },
