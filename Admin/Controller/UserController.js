@@ -85,8 +85,8 @@ const deleteUser = async (req, res) => {
     email = email.trim().toLowerCase();
     console.log(`🟡 Attempting to delete user with email: ${email}`);
 
-    // Find departments containing this user
-    const userDocuments = await UserDetails.find({ "users.email": { $regex: new RegExp(`^${email}$`, "i") } });
+    // Find documents where the user exists
+    const userDocuments = await UserDetails.find({ "users.email": email });
 
     if (userDocuments.length === 0) {
       console.log("⚠️ User not found in any department.");
@@ -97,6 +97,7 @@ const deleteUser = async (req, res) => {
 
     let deleteSuccess = false;
     for (let doc of userDocuments) {
+      // Remove the user from the array
       const updatedDoc = await UserDetails.findOneAndUpdate(
         { _id: doc._id },
         { $pull: { users: { email } } },
@@ -109,9 +110,9 @@ const deleteUser = async (req, res) => {
         console.log(`✅ Successfully deleted user from department: ${doc.department}`);
         deleteSuccess = true;
 
-        // 🛑 NEW FIX: Ensure users array is never empty
+        // 🚀 **Fix: Remove document if users array is empty**
         if (updatedDoc.users.length === 0) {
-          console.log(`⚠️ No users left in department: ${doc.department}, handling cleanup.`);
+          console.log(`⚠️ No users left in department: ${doc.department}, deleting document.`);
           await UserDetails.deleteOne({ _id: doc._id });
         }
       }
