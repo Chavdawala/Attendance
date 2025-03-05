@@ -13,28 +13,34 @@ const Help = () => {
   const imagesRef = useRef([]);
 
   useEffect(() => {
+    console.log("Sections:", sectionsRef.current);
+    console.log("Images:", imagesRef.current);
+
     // Heading Animation
-    gsap.from(headingRef.current, {
-      opacity: 0,
-      y: -50,
-      duration: 1,
-      ease: "power2.out",
-    });
+    gsap.fromTo(
+      headingRef.current,
+      { opacity: 0, y: -50 },
+      { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+    );
 
     // Section Animation (Cards)
     sectionsRef.current.forEach((section, index) => {
-      gsap.from(section, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        ease: "power2.out",
-        delay: index * 0.2,
-        scrollTrigger: {
-          trigger: section,
-          start: "top 85%",
-          toggleActions: "play none none none",
-        },
-      });
+      gsap.fromTo(
+        section,
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power2.out",
+          delay: index * 0.2,
+          scrollTrigger: {
+            trigger: section,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        }
+      );
     });
 
     // Floating Effect for Images
@@ -89,7 +95,7 @@ const Help = () => {
         <div className="max-w-6xl w-full">
           <h1
             ref={headingRef}
-            className="text-3xl font-bold text-center mb-6 opacity-0"
+            className="text-3xl font-bold text-center mb-6"
           >
             Welcome to the Career Naksha Help Desk
           </h1>
@@ -98,22 +104,22 @@ const Help = () => {
           </p>
 
           <div className="grid gap-8 md:grid-cols-2">
-            {helpData.map((helpData, index) => (
+            {helpData.map((item, index) => (
               <div
                 key={index}
                 ref={(el) => (sectionsRef.current[index] = el)}
-                className="shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:bg-sky-50 opacity-0"
+                className="shadow-lg rounded-lg p-6 transition-transform transform hover:scale-105 hover:bg-sky-50"
               >
                 <img
                   ref={(el) => (imagesRef.current[index] = el)}
-                  src={helpData.image}
-                  alt={helpData.title}
+                  src={item.image}
+                  alt={item.title}
                   className="w-full h-72 object-contain rounded-md mb-4 border border-gray-300"
                 />
-                <h2 className="text-xl font-semibold mb-2 text-gray-800">{helpData.title}</h2>
-                <p className="text-gray-600 text-sm">{helpData.description}</p>
+                <h2 className="text-xl font-semibold mb-2 text-gray-800">{item.title}</h2>
+                <p className="text-gray-600 text-sm">{item.description}</p>
                 {/* Image Name Below - Dynamically From Array */}
-                <p className="text-gray-500 text-sm text-center italic mt-2">{helpData.imageName}</p>
+                <p className="text-gray-500 text-sm text-center italic mt-2">{item.imageName}</p>
               </div>
             ))}
           </div>
