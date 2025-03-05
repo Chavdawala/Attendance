@@ -130,7 +130,7 @@ const handleGoogleLoginSuccess = async (response) => {
                     {/* Submit Button */}
                     <button
                     type="submit"
-                    className="w-full h-12 border text-white font-bold border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 transition duration-200" // Reduced gap using mb-2
+                    className="w-full h-12 border text-white font-bold border-blue-500 rounded-lg bg-blue-500 hover:bg-blue-600 transition duration-200" 
                     >
                     LOGIN
                     </button>
@@ -156,7 +156,7 @@ const handleGoogleLoginSuccess = async (response) => {
                     <p className="text-center text-sm text-gray-600">
                         Don't have account?{" "}
                         <Link to="/signup" className="text-blue-500 hover:underline">
-                            Create Your Account?
+                            Sign-Up
                         </Link>
                     </p>
                 </form>
