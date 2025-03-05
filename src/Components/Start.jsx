@@ -16,11 +16,18 @@ const CareerNaksha = () => {
       { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
     );
 
-    // Scale in for title
+    // Slow-motion effect for title (Coming from bottom)
     gsap.fromTo(
       titleRef.current,
-      { scale: 0.8, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 1, ease: "elastic.out(1, 0.5)", delay: 0.3 }
+      { y: 100, opacity: 0, scale: 0.9 }, // Start lower on the screen
+      { 
+        y: 0, 
+        opacity: 1, 
+        scale: 1,
+        duration: 2.5, // Slow-motion effect (Increase duration)
+        ease: "power4.out", // Smooth easing effect
+        delay: 0.3 
+      }
     );
 
     // Fade in overlay for smooth effect
@@ -30,13 +37,13 @@ const CareerNaksha = () => {
       ease: "power2.inOut",
     });
 
-    // Button hover effect
+    // Button hover effect (subtle breathing effect)
     gsap.fromTo(
       buttonRef.current,
-      { scale: 0.9 },
+      { scale: 0.95 },
       {
         scale: 1,
-        duration: 0.5,
+        duration: 0.6,
         ease: "power3.out",
         repeat: -1,
         yoyo: true,
