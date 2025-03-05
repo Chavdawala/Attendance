@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { Eye, EyeOff, User, Lock } from "lucide-react"; 
 
 const AdminLogin = () => {
     const [username, setUsername] = useState('');
@@ -28,38 +29,35 @@ const AdminLogin = () => {
                     <h2 className="text-center text-black text-2xl font-bold">Admin Login</h2>
                     {error && <p className="text-red-500 text-center">{error}</p>}
 
-                    {/* Username Input */}
-                    <input 
-                        type="text" 
-                        value={username} 
-                        onChange={(e) => setUsername(e.target.value)} 
-                        placeholder="Username" 
-                        className="w-full p-3 rounded-lg bg-gray-200"
-                    />
+                    {/* Username Input with User Icon */}
+                    <div className="relative flex items-center">
+                        <User className="absolute left-3 text-gray-500" size={20} />
+                        <input 
+                            type="text" 
+                            value={username} 
+                            onChange={(e) => setUsername(e.target.value)} 
+                            placeholder="Username" 
+                            className="w-full p-3 pl-10 rounded-lg bg-gray-200"
+                        />
+                    </div>
 
-                    {/* Password Input */}
-                    <div className="relative">
+                    {/* Password Input with Lock Icon and Eye Toggle */}
+                    <div className="relative flex items-center">
+                        <Lock className="absolute left-3 text-gray-500" size={20} />
                         <input
                             type={showPassword ? "text" : "password"}  
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
-                            className="w-full p-3 rounded-lg bg-gray-200"
+                            className="w-full p-3 pl-10 pr-10 rounded-lg bg-gray-200"
                         />
-                    </div>
-
-                    {/* Show Password Checkbox */}
-                    <div className="flex items-center">
-                        <input
-                            type="checkbox"
-                            id="showPassword"
-                            checked={showPassword}
-                            onChange={() => setShowPassword(!showPassword)}
-                            className="mr-2"
-                        />
-                        <label htmlFor="showPassword" className="text-sm text-gray-600">
-                            Show Password
-                        </label>
+                        <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 text-gray-500"
+                        >
+                            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                        </button>
                     </div>
 
                     {/* Login Button */}
@@ -68,10 +66,10 @@ const AdminLogin = () => {
                     </button>
 
                     <p className="text-center mt-4 text-black">
-          <Link to="/home" className="text-blue-500 cursor-pointer hover:underline">
-            Employee Login
-          </Link>
-        </p>
+                        <Link to="/home" className="text-blue-500 cursor-pointer hover:underline">
+                            Employee Login
+                        </Link>
+                    </p>
                 </form>
             </div>
         </div>

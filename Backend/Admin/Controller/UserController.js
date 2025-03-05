@@ -74,42 +74,59 @@ const updateUser = async (req, res) => {
 
 // Delete User
 const deleteUser = async (req, res) => {
-  const { email } = req.params;
+  let { email } = req.params;
 
   try {
-      if (!email) {
-          return res.status(400).json({ message: "Email is required." });
-      }
+    if (!email || email.trim() === "null") {
+      console.log("❌ Invalid email received:", email);
+      return res.status(400).json({ message: "Invalid email." });
+    }
 
-      console.log(`Attempting to delete user with email: ${email}`);
+    email = email.trim().toLowerCase();
+    console.log(`🟡 Attempting to delete user with email: ${email}`);
 
-      // Check if user exists in UserDetails
-      const userExists = await UserDetails.findOne({ "users.email": email });
+    const existingUser = await UserDetails.findOne({ "users.email": email });
 
-      if (!userExists) {
-          return res.status(404).json({ message: "User not found." });
-      }
+    if (!existingUser) {
+      console.log("❌ User not found:", email);
+      return res.status(404).json({ message: "User not found." });
+    }
 
-      // Remove user from UserDetails schema only
-      const result = await UserDetails.findOneAndUpdate(
-          { "users.email": email },
-          { $pull: { users: { email } } },
-          { new: true }
-      );
+    console.log("✅ Found user, proceeding with deletion...");
 
-      if (!result) {
-          return res.status(404).json({ message: "User not found or already deleted." });
-      }
+    // Ensure the user exists in the array before trying to pull
+    const userExistsInArray = existingUser.users.some(users => users.email === email);
+    if (!userExistsInArray) {
+      console.log("❌ Email not found in users array:", email);
+      return res.status(404).json({ message: "User email not found in record." });
+    }
 
-      console.log(`User deleted successfully: ${email}`);
-      res.status(200).json({ message: "User deleted successfully." });
+    // Remove the user from the array
+    const updatedDoc = await UserDetails.findOneAndUpdate(
+      { _id: existingUser._id },
+      { $pull: { users: { email } } },
+      { new: true }
+    );
+
+    if (!updatedDoc) {
+      console.log("❌ Failed to delete user:", email);
+      return res.status(500).json({ message: "User deletion failed." });
+    }
+
+    // If no users left in department, delete the document
+    if (updatedDoc.users.length === 0) {
+      console.log("🗑 No users left, deleting document...");
+      await UserDetails.deleteOne({ _id: existingUser._id });
+    }
+
+    console.log("✅ User deleted successfully:", email);
+    res.status(200).json({ message: "User deleted successfully." });
 
   } catch (error) {
-      console.error("Error deleting user:", error);
-      res.status(500).json({ message: "Server error.", error: error.message });
+    console.error("❌ Error deleting user:", error);
+    res.status(500).json({ message: "Server error.", error: error.message });
   }
 };
-
 
 
 

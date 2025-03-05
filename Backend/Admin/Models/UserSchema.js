@@ -9,7 +9,7 @@ const userSchema = new Schema({
     lastname: String,
     Birthdate: Date,
     City: String,
-    email:{type: String, required: true},
+    email: { type: String, required: true, unique: true, sparse: true },
     secondemail: String,
     phone: String,
     jobtype: String,
