@@ -43,7 +43,7 @@ const CareerNaksha = () => {
 
     // Button Glow Effect (Looping)
     gsap.to(buttonRef.current, {
-      boxShadow: "0px 0px 20px rgba(0, 122, 255, 0.8)",
+      boxShadow: "0px 0px 20px rgba(0, 122, 255, 0.5)",
       duration: 1.5,
       yoyo: true,
       repeat: -1,
