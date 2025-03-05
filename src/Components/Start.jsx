@@ -1,7 +1,49 @@
-import React from "react";
-import {Link} from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { gsap } from "gsap";
 
 const CareerNaksha = () => {
+  const contentRef = useRef(null);
+  const buttonRef = useRef(null);
+  const titleRef = useRef(null);
+  const videoOverlayRef = useRef(null);
+
+  useEffect(() => {
+    // Fade in and slide up for content
+    gsap.fromTo(
+      contentRef.current,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1, ease: "power3.out" }
+    );
+
+    // Scale in for title
+    gsap.fromTo(
+      titleRef.current,
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1, ease: "elastic.out(1, 0.5)", delay: 0.3 }
+    );
+
+    // Fade in overlay for smooth effect
+    gsap.to(videoOverlayRef.current, {
+      opacity: 0.5,
+      duration: 1.5,
+      ease: "power2.inOut",
+    });
+
+    // Button hover effect
+    gsap.fromTo(
+      buttonRef.current,
+      { scale: 0.9 },
+      {
+        scale: 1,
+        duration: 0.5,
+        ease: "power3.out",
+        repeat: -1,
+        yoyo: true,
+      }
+    );
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gray-900 text-white">
       {/* Background Video */}
@@ -16,19 +58,20 @@ const CareerNaksha = () => {
           <source src="/back.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute inset-0 bg-black opacity-50"></div>
+        <div ref={videoOverlayRef} className="absolute inset-0 bg-black opacity-0"></div>
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center px-6 lg:px-0 max-w-2xl mx-auto">
-        <h1 className="text-4xl lg:text-6xl font-extrabold mb-4">
+      <div ref={contentRef} className="relative z-10 text-center px-6 lg:px-0 max-w-2xl mx-auto">
+        <h1 ref={titleRef} className="text-4xl lg:text-6xl font-extrabold mb-4">
           CareerNaksha
         </h1>
         <p className="text-lg text-gray-300 mb-6">
-        Welcome to Our Attendance Portal
+          Welcome to Our Attendance Portal
         </p>
         <div className="flex justify-center space-x-4">
           <Link
+            ref={buttonRef}
             to="/home"
             className="bg-blue-500 text-white px-6 py-3 rounded-lg text-sm font-medium hover:bg-blue-600"
           >
