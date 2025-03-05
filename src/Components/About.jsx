@@ -88,7 +88,7 @@ const AboutUs = () => {
             </p>
           </div>
           <div ref={teamRef} className="flex flex-wrap -m-4">
-            {["1.jpeg", "2.jpeg", "3.jpeg"].map((src, index) => (
+            {["1.jpeg", "2.jpeg", "3.jpeg","4.jpeg", "5.jpeg", "6.jpeg", "7.jpeg", "8.jpeg", "9.jpg"].map((src, index) => (
               <div key={index} className="p-4 md:w-1/3 w-full">
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                   <img alt="team" className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={src} />
