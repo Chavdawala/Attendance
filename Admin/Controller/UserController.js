@@ -95,7 +95,7 @@ const deleteUser = async (req, res) => {
     console.log("✅ Found user, proceeding with deletion...");
 
     // Ensure the user exists in the array before trying to pull
-    const userExistsInArray = existingUser.users.some(user => user.email === email);
+    const userExistsInArray = existingUser.users.some(users => users.email === email);
     if (!userExistsInArray) {
       console.log("❌ Email not found in users array:", email);
       return res.status(404).json({ message: "User email not found in record." });
