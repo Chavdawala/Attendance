@@ -82,23 +82,30 @@ function DisplayData() {
                 </div>
 
                 {data?.user && (
-                    <div className="space-y-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            {["Department", "First Name", "Last Name"].map((key, index) => (
-                                <div key={key} ref={(el) => (boxRefs.current[index] = el)} className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
-                                    <strong>{key}:</strong> {data.user[key.toLowerCase().replace(/ /g, "")] || "N/A"}
-                                </div>
-                            ))}
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {["Email", "Job Type"].map((key, index) => (
-                                <div key={key} ref={(el) => (boxRefs.current[index + 3] = el)} className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
-                                    <strong>{key}:</strong> {data.user[key.toLowerCase().replace(/ /g, "")] || "N/A"}
-                                </div>
-                            ))}
-                        </div>
-                    </div>
+                   <div className="space-y-4">
+                   {/* First Row: Three Boxes */}
+                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                     <div className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
+                       <strong>Department:</strong> {data?.department || "N/A"}
+                     </div>
+                     <div className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
+                       <strong>First Name:</strong> {data.user.firstname || "N/A"}
+                     </div>
+                     <div className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
+                       <strong>Last Name:</strong> {data.user.lastname || "N/A"}
+                     </div>
+                   </div>
+       
+                   {/* Second Row: Two Boxes */}
+                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                     <div className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
+                       <strong>Email:</strong> {data.user.email || "N/A"}
+                     </div>
+                     <div className="bg-gray-100 p-4 rounded-lg text-gray-800 shadow-sm">
+                       <strong>Job Type:</strong> {data.user.jobtype || "N/A"}
+                     </div>
+                   </div>
+                 </div>
                 )}
             </div>
         </div>
