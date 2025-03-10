@@ -61,15 +61,15 @@ const AboutUs = () => {
 
   // Team Members Data
   const teamMembers = [
-    { name: "Alice Johnson", role: "Project Manager", image: "1.jpeg" },
-    { name: "Bob Smith", role: "Software Engineer", image: "2.jpeg" },
-    { name: "Charlie Brown", role: "UI/UX Designer", image: "3.jpeg" },
-    { name: "David Lee", role: "Frontend Developer", image: "4.jpeg" },
-    { name: "Emma Wilson", role: "Backend Developer", image: "5.jpeg" },
-    { name: "Frank White", role: "DevOps Engineer", image: "6.jpeg" },
-    { name: "Grace Adams", role: "QA Engineer", image: "7.jpeg" },
-    { name: "Henry Green", role: "Data Scientist", image: "8.jpeg" },
-    { name: "Ivy Thompson", role: "Product Owner", image: "9.jpg" }
+    { name: "Nimish Gopal", role: "Founder", image: "1.jpeg" },
+    { name: "Tushar Karlekar", role: "President Execution", image: "2.jpeg" },
+    { name: "Sonali Narayangaoker", role: "Senior Customer & Marketing Manager", image: "3.jpeg" },
+    { name: "Rajendra Singh Sirvi", role: "Head Admissions & University Relations", image: "4.jpeg" },
+    { name: "Lata Chandel", role: "Senior HR Associate", image: "5.jpeg" },
+    { name: "Huma Sufiyan", role: "Head Community Manger & PM Shri Lead", image: "6.jpeg" },
+    { name: "Naishvi Shah", role: "Assistant CSR Project Manager", image: "7.jpeg" },
+    { name: "Anshul Parashari", role: "Marketing Associate", image: "8.jpeg" },
+    { name: "Shiva", role: "Jr. Full Stack Developer", image: "9.jpg" }
   ];
 
   return (
