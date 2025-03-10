@@ -59,6 +59,19 @@ const AboutUs = () => {
     );
   }, []);
 
+  // Team Members Data
+  const teamMembers = [
+    { name: "Alice Johnson", role: "Project Manager", image: "1.jpeg" },
+    { name: "Bob Smith", role: "Software Engineer", image: "2.jpeg" },
+    { name: "Charlie Brown", role: "UI/UX Designer", image: "3.jpeg" },
+    { name: "David Lee", role: "Frontend Developer", image: "4.jpeg" },
+    { name: "Emma Wilson", role: "Backend Developer", image: "5.jpeg" },
+    { name: "Frank White", role: "DevOps Engineer", image: "6.jpeg" },
+    { name: "Grace Adams", role: "QA Engineer", image: "7.jpeg" },
+    { name: "Henry Green", role: "Data Scientist", image: "8.jpeg" },
+    { name: "Ivy Thompson", role: "Product Owner", image: "9.jpg" }
+  ];
+
   return (
     <>
       <Navbar />
@@ -79,22 +92,24 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Our Team Section */}
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our </h1>
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
               CareerNaksha is the most trusted online offline career counselling & career guidance platform for students connecting top career counsellors in India.
             </p>
           </div>
           <div ref={teamRef} className="flex flex-wrap -m-4">
-            {["1.jpeg", "2.jpeg", "3.jpeg","4.jpeg", "5.jpeg", "6.jpeg", "7.jpeg", "8.jpeg", "9.jpg"].map((src, index) => (
+            {teamMembers.map((member, index) => (
               <div key={index} className="p-4 md:w-1/3 w-full">
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-                  <img alt="team" className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={src} />
+                  <img alt={member.name} className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={member.image} />
                   <div className="flex-grow">
-                    <h2 className="text-gray-900 title-font font-medium">Team Member {index + 1}</h2>
-                    <p className="text-gray-500">Role {index + 1}</p>
+                    <h2 className="text-gray-900 title-font font-medium">{member.name}</h2>
+                    <p className="text-gray-500">{member.role}</p>
                   </div>
                 </div>
               </div>
@@ -102,6 +117,8 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
+      {/* Glimpse of Events Section */}
       <section className="text-gray-600 body-font bg-sky-50">
         <div className="container px-5 py-16 mx-auto flex flex-wrap">
           <div className="flex w-full mb-4 flex-wrap">
@@ -116,6 +133,7 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
+
       <Footer />
     </>
   );
