@@ -82,7 +82,7 @@ const AboutUs = () => {
       <section className="text-gray-600 body-font">
         <div className="container px-5 py-16 mx-auto">
           <div className="flex flex-col text-center w-full mb-20">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our Team</h1>
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Our </h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
               CareerNaksha is the most trusted online offline career counselling & career guidance platform for students connecting top career counsellors in India.
             </p>
