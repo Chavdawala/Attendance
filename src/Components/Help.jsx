@@ -63,14 +63,14 @@ const Help = () => {
       title: "Clock-in - Recording Your Login Time & Location",
       description:
         "This page allows employees and interns to log their attendance by storing the current date, time, and location. Enter your name and email, check the date & location, and click 'Store Date and Time'.",
-      imageName: "Login Page",
+      imageName: "Clock-in Page",
     },
     {
       image: "/logout.png",
       title: "Clock-out - Recording Your Logout Time & Location",
       description:
         "This page allows employees and interns to record their logout time along with their location. Simply enter your details and click 'Store Date and Time' to complete the logout process.",
-      imageName: "Logout Page",
+      imageName: "Clock-out Page",
     },
     {
       image: "/data.png",
