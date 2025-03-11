@@ -24,7 +24,7 @@ const isWithinRange = (lat, lon) => {
 
   const distance = R * c; 
 
-  return distance <= 50; 
+  return distance <= 100; 
 };
 
 // POST: Store loginTime for an existing user and generate JWT
