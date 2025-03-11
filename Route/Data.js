@@ -24,7 +24,9 @@ const isWithinRange = (lat, lon) => {
 
   const distance = R * c; 
 
-  return distance <= 100; 
+  if (distance <= 100){
+    return "You are in Career Naksha Office Range .";
+  } 
 };
 
 // POST: Store loginTime for an existing user and generate JWT
@@ -41,9 +43,10 @@ router.post("/user", async (req, res) => {
       });
   }
 
+  const locationName = isWithinRange(latitude, longitude);
   if (!isWithinRange(latitude, longitude)) {
     return res.status(403).json({
-      message: "You are not within the allowed location range (50m).",
+      message: "You are not within the allowed location range (100m).",
     });
   }
 
@@ -63,6 +66,7 @@ router.post("/user", async (req, res) => {
     user.loginTimes.push({
       latitude: latitude.toString(),
       longitude: longitude.toString(),
+      locationName,
     });
 
     const tokenPayload = {
