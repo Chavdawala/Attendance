@@ -4,6 +4,27 @@ const User = require('../Modules/User'); // Your User model
 const router = express.Router();
 
 // POST: Store logout time for an existing user
+
+const isWithinRange = (lat, lon) => {
+    const targetLat = 22.318191;
+    const targetLon = 73.187403;
+    const R = 6371e3; // Earth's radius in meters
+    const φ1 = (lat * Math.PI) / 180;
+    const φ2 = (targetLat * Math.PI) / 180;
+    const Δφ = ((targetLat - lat) * Math.PI) / 180;
+    const Δλ = ((targetLon - lon) * Math.PI) / 180;
+  
+    const a =
+      Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+      Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  
+    const distance = R * c; 
+  
+    if (distance <= 100){
+      return "You are in Career Naksha Office Range .";
+    } 
+  };
 router.post("/logout", async (req, res) => {
     const { email, name, latitude, longitude, logoutTime } = req.body;  
 
@@ -17,6 +38,12 @@ router.post("/logout", async (req, res) => {
         return res.status(400).json({ message: "Invalid email provided." });
     }
 
+    if (!isWithinRange(latitude, longitude)) {
+        return res.status(403).json({
+          message: "You are not within the allowed location range (100m).",
+        });
+      }
+      
     try {
         let user = await User.findOne({ email });
 
