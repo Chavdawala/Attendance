@@ -9,8 +9,8 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
 //location 
 const isWithinRange = (lat, lon) => {
-  const targetLat = 22.3188524;
-  const targetLon = 73.1874178;
+  const targetLat = 22.318191;
+  const targetLon = 73.187403;
   const R = 6371e3; // Earth's radius in meters
   const φ1 = (lat * Math.PI) / 180;
   const φ2 = (targetLat * Math.PI) / 180;
