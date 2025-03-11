@@ -7,6 +7,28 @@ const router = express.Router();
 // Secret key for JWT (replace with your secure secret key, use environment variable in production)
 const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key";
 
+//location 
+const isWithinRange = (lat, lon) => {
+  const targetLat = 22.318191;
+  const targetLon = 73.187403;
+  const R = 6371e3; // Earth's radius in meters
+  const φ1 = (lat * Math.PI) / 180;
+  const φ2 = (targetLat * Math.PI) / 180;
+  const Δφ = ((targetLat - lat) * Math.PI) / 180;
+  const Δλ = ((targetLon - lon) * Math.PI) / 180;
+
+  const a =
+    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
+    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const distance = R * c; 
+
+  if (distance <= 100){
+    return "You are in Career Naksha Office Range .";
+  } 
+};
+
 // POST: Store loginTime for an existing user and generate JWT
 router.post("/user", async (req, res) => {
   const { email, name, latitude, longitude } = req.body;
@@ -19,6 +41,13 @@ router.post("/user", async (req, res) => {
         message:
           "All fields (loginTime, email, name, latitude, longitude) are required.",
       });
+  }
+
+  const locationName = isWithinRange(latitude, longitude);
+  if (!isWithinRange(latitude, longitude)) {
+    return res.status(403).json({
+      message: "You are not within the allowed location range (100m).",
+    });
   }
 
   // Check if email is a valid string
@@ -37,6 +66,7 @@ router.post("/user", async (req, res) => {
     user.loginTimes.push({
       latitude: latitude.toString(),
       longitude: longitude.toString(),
+      locationName,
     });
 
     const tokenPayload = {

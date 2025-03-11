@@ -107,6 +107,9 @@ function AttendanceSummary() {
                   <p className="text-gray-700">
                     <strong>Location:</strong> {record.latitude}, {record.longitude}
                   </p>
+                  <p className="text-gray-700">
+                  <strong>Location Name:</strong> {entry.locationName || "Unknown"}
+                  </p>
                 </div>
               );
             })}

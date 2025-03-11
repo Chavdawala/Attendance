@@ -9,7 +9,7 @@
     const [dateTime, setDateTime] = useState(new Date());
     const [inputName, setInputName] = useState(""); // For user input name
     const [inputEmail, setInputEmail] = useState(""); // For user input email
-    const [statusMessage, setStatusMessage] = useState(""); // For status message (success/error)
+    const [statusMessage, setStatusMessage] = useState(""); 
     const [latitude, setLatitude] = useState(null);
     const [longitude, setLongitude] = useState(null);
     const [mockData, setMockData] = useState([]);
