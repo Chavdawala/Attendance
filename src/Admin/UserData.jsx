@@ -196,15 +196,15 @@ const Userform = () => {
               </div>
               <div>
                 <label className="block text-gray-700">Join Date:</label>
-                <input type="date" name="joinDate" className="mt-1 p-2 w-full border rounded-md" />
+                <input type="date" name="joinDate" value={Formdata.joinDate || ""} onChange={handleChange} className="mt-1 p-2 w-full border rounded-md" />
               </div>
               <div>
                 <label className="block text-gray-700">Internship Duration (Months):</label>
-                <input type="number" name="internshipDuration" className="mt-1 p-2 w-full border rounded-md" />
+                <input type="number" name="internshipDuration" value={Formdata.joinDate || ""} onChange={handleChange} className="mt-1 p-2 w-full border rounded-md" />
               </div>
               <div>
                 <label className="block text-gray-700">End Date:</label>
-                <input type="date" name="endDate" className="mt-1 p-2 w-full border rounded-md" />
+                <input type="date" name="endDate" value={Formdata.joinDate || ""} onChange={handleChange} className="mt-1 p-2 w-full border rounded-md" />
               </div>
               <div>
                 <label className="block text-gray-700">Shift:</label>
