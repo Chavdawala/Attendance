@@ -79,9 +79,12 @@ function Profile() {  // 🔹 FIX: Renamed function from DisplayData to Profile
         </div>
 
         <div className="flex items-center space-x-3 text-gray-700">
-          <FaBriefcase className="text-blue-500 text-lg" />
-          <span>Join Date : {data?.user?.joinDate || "N/A"}</span>
-        </div>
+  <FaBriefcase className="text-blue-500 text-lg" />
+  <span>
+    Join Date: {data?.user?.joinDate ? new Date(data.user.joinDate).toLocaleDateString() : "N/A"}
+  </span>
+</div>
+
 
 
 

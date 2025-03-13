@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Navbar from './Navbar';
+import Navbar from "./Navbar";
 
 const ShowData = () => {
   const [users, setUsers] = useState([]);
@@ -22,7 +22,10 @@ const ShowData = () => {
 
   const handleEdit = (user) => {
     setEditingUser(user.email);
-    setEditedData(user);
+    setEditedData({
+      ...user,
+      joinDate: user.joinDate ? new Date(user.joinDate).toISOString().split("T")[0] : "",
+    });
   };
 
   const handleDelete = async (email) => {
@@ -33,8 +36,6 @@ const ShowData = () => {
       console.error("Error deleting user:", error);
     }
   };
-
-
 
   const handleChange = (e) => {
     setEditedData({ ...editedData, [e.target.name]: e.target.value });
@@ -55,8 +56,8 @@ const ShowData = () => {
 
   return (
     <>
-    <Navbar/>
-    <div className="container mx-auto p-4 sm:p-6 bg-sky-50">
+      <Navbar />
+      <div className="container mx-auto p-4 sm:p-6 bg-sky-50">
         <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
           Employee Onboarding
         </h2>
@@ -64,7 +65,6 @@ const ShowData = () => {
           <p className="text-gray-600 text-center">No users available.</p>
         ) : (
           <div className="overflow-x-auto">
-            {/* Desktop Table */}
             <table className="min-w-full bg-white shadow-md rounded-lg overflow-hidden hidden sm:table">
               <thead className="bg-gray-800 text-white">
                 <tr>
@@ -124,23 +124,47 @@ const ShowData = () => {
                         )}
                       </td>
                       <td className="py-2 px-4">{user.jobtype || "N/A"}</td>
-                      <td className="py-2 px-4">{new Date(user.joinDate).toLocaleDateString()}</td>
+                      <td className="py-2 px-4">
+                        {editingUser === user.email ? (
+                          <input
+                            type="date"
+                            name="joinDate"
+                            className="border rounded px-2 py-1 w-full"
+                            value={editedData.joinDate || ""}
+                            onChange={handleChange}
+                          />
+                        ) : (
+                          new Date(user.joinDate).toLocaleDateString()
+                        )}
+                      </td>
                       <td className="py-2 px-4 text-center">
                         {editingUser === user.email ? (
                           <>
-                            <button className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 mr-2" onClick={handleSave}>
+                            <button
+                              className="bg-green-500 text-white px-3 py-1 rounded-md hover:bg-green-600 mr-2"
+                              onClick={handleSave}
+                            >
                               Save
                             </button>
-                            <button className="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600" onClick={() => setEditingUser(null)}>
+                            <button
+                              className="bg-gray-500 text-white px-3 py-1 rounded-md hover:bg-gray-600"
+                              onClick={() => setEditingUser(null)}
+                            >
                               Cancel
                             </button>
                           </>
                         ) : (
                           <>
-                            <button className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2" onClick={() => handleEdit(user)}>
+                            <button
+                              className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 mr-2"
+                              onClick={() => handleEdit(user)}
+                            >
                               Edit
                             </button>
-                            <button className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600" onClick={() => handleDelete(user.email)}>
+                            <button
+                              className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                              onClick={() => handleDelete(user.email)}
+                            >
                               Delete
                             </button>
                           </>
@@ -152,38 +176,34 @@ const ShowData = () => {
               </tbody>
             </table>
 
-            {/* Mobile View (Stacked Cards) */}
-<div className="sm:hidden">
-  {users.map((department, index) =>
-    department.users.map((user, i) => (
-      <div key={`${index}-${i}`} className="bg-white shadow-md rounded-lg p-4 mb-4">
-        <p><strong>Department:</strong> {department.department}</p>
-        <p><strong>Name:</strong> {user.firstname} {user.lastname}</p>
-        <p><strong>Email:</strong> {user.email}</p>
-        <p><strong>Phone:</strong> {user.phone || "N/A"}</p>
-        <p><strong>City:</strong> {user.City || "N/A"}</p>
-        <p><strong>Job Type:</strong> {user.jobtype || "N/A"}</p>
-
-        {editingUser === user.email ? (
-          <>
-            <input type="text" name="firstname" className="border rounded px-2 py-1 w-full mt-1" value={editedData.firstname || ""} onChange={handleChange} />
-            <input type="text" name="phone" className="border rounded px-2 py-1 w-full mt-1" value={editedData.phone || ""} onChange={handleChange} />
-            <input type="text" name="City" className="border rounded px-2 py-1 w-full mt-1" value={editedData.City || ""} onChange={handleChange} />
-            <input type="text" name="jobtype" className="border rounded px-2 py-1 w-full mt-1" value={editedData.jobtype || ""} onChange={handleChange} />
-            <button className="bg-green-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={handleSave}>Save</button>
-            <button className="bg-gray-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => setEditingUser(null)}>Cancel</button>
-          </>
-        ) : (
-          <>
-            <button className="bg-blue-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={() => handleEdit(user)}>Edit</button>
-            <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => handleDelete(user.email)}>Delete</button>
-          </>
-        )}
-      </div>
-    ))
-  )}
-</div>
-
+            {/* Mobile View */}
+            <div className="sm:hidden">
+              {users.map((department, index) =>
+                department.users.map((user, i) => (
+                  <div key={`${index}-${i}`} className="bg-white shadow-md rounded-lg p-4 mb-4">
+                    <p><strong>Department:</strong> {department.department}</p>
+                    <p><strong>Name:</strong> {user.firstname} {user.lastname}</p>
+                    <p><strong>Email:</strong> {user.email}</p>
+                    <p><strong>Phone:</strong> {user.phone || "N/A"}</p>
+                    <p><strong>City:</strong> {user.City || "N/A"}</p>
+                    <p><strong>Job Type:</strong> {user.jobtype || "N/A"}</p>
+                    <p><strong>Join Date:</strong> {new Date(user.joinDate).toLocaleDateString()}</p>
+                    {editingUser === user.email ? (
+                      <>
+                        <input type="date" name="joinDate" className="border rounded px-2 py-1 w-full mt-1" value={editedData.joinDate || ""} onChange={handleChange} />
+                        <button className="bg-green-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={handleSave}>Save</button>
+                        <button className="bg-gray-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => setEditingUser(null)}>Cancel</button>
+                      </>
+                    ) : (
+                      <>
+                        <button className="bg-blue-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={() => handleEdit(user)}>Edit</button>
+                        <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => handleDelete(user.email)}>Delete</button>
+                      </>
+                    )}
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         )}
       </div>
