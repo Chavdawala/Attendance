@@ -6,22 +6,28 @@ function Email() {
   const body = `Hello,\n\nHere is my EOD (End of Day) report:\n\n- Tasks Completed: \n- Challenges Faced: \n- Plans for Tomorrow: \n\nBest Regards,\n[Your Name]`;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white p-6">
-      <div className="bg-gray-800 p-8 rounded-2xl shadow-lg text-center w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-4 text-blue-400">End of Day Report</h1>
-        <p className="text-gray-300 mb-6">
-          Please submit your **EOD (End of Day) report** by clicking the button below. 
-          Your email will be pre-filled with the required format.
+    <div className="flex flex-col items-center justify-center min-h-screen bg-blue-50 p-6">
+      <div className="bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-lg text-center w-full max-w-lg border border-gray-200">
+        <h1 className="text-2xl font-extrabold mb-4 text-blue-600">📩 End of Day Report</h1>
+        
+        <p className="text-gray-600 mb-6">
+          Please submit your **EOD (End of Day) report** with the tasks you completed today.
+          Click the button below to send your report.
         </p>
 
         <a
           href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition duration-300 transform hover:scale-105"
+          className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold shadow-md transition duration-300 transform hover:scale-105 focus:ring-4 focus:ring-blue-300"
         >
-          Send EOD Report 📧
+          Send EOD Report 🚀
         </a>
 
-        <p className="text-xs text-gray-400 mt-4">Your report should include completed tasks, challenges, and next steps.</p>
+        <div className="mt-6 p-4 bg-gray-100 rounded-lg text-gray-700 text-sm border border-gray-300">
+          ✨ **EOD Format:**  
+          - **Tasks Completed** ✅  
+          - **Challenges Faced** ⚠️  
+          - **Plans for Tomorrow** 📅  
+        </div>
       </div>
     </div>
   );
