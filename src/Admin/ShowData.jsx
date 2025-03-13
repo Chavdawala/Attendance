@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from './Navbar';
-// import Footer from '../Components/Footer';
-// import "./ShowData.css";
 
 const ShowData = () => {
   const [users, setUsers] = useState([]);
@@ -153,36 +151,40 @@ const ShowData = () => {
             </table>
 
             {/* Mobile View (Stacked Cards) */}
-            <div className="sm:hidden">
-              {users.map((department, index) =>
-                department.users.map((user, i) => (
-                  <div key={`${index}-${i}`} className="bg-white shadow-md rounded-lg p-4 mb-4">
-                    <p><strong>Department:</strong> {department.department}</p>
-                    <p><strong>Email:</strong> {user.email}</p>
-                    
-                    {editingUser === user.email ? (
-                      <>
-                        <input type="text" name="firstname" className="border rounded px-2 py-1 w-full mt-1" value={editedData.firstname || ""} onChange={handleChange} />
-                        <input type="text" name="phone" className="border rounded px-2 py-1 w-full mt-1" value={editedData.phone || ""} onChange={handleChange} />
-                        <input type="text" name="City" className="border rounded px-2 py-1 w-full mt-1" value={editedData.City || ""} onChange={handleChange} />
-                        <input type="text" name="jobtype" className="border rounded px-2 py-1 w-full mt-1" value={editedData.jobtype || ""} onChange={handleChange} />
-                        <button className="bg-green-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={handleSave}>Save</button>
-                        <button className="bg-gray-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => setEditingUser(null)}>Cancel</button>
-                      </>
-                    ) : (
-                      <>
-                        <button className="bg-blue-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={() => handleEdit(user)}>Edit</button>
-                        <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => handleDelete(user.email)}>Delete</button>
-                      </>
-                    )}
-                  </div>
-                ))
-              )}
-            </div>
+<div className="sm:hidden">
+  {users.map((department, index) =>
+    department.users.map((user, i) => (
+      <div key={`${index}-${i}`} className="bg-white shadow-md rounded-lg p-4 mb-4">
+        <p><strong>Department:</strong> {department.department}</p>
+        <p><strong>Name:</strong> {user.firstname} {user.lastname}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Phone:</strong> {user.phone || "N/A"}</p>
+        <p><strong>City:</strong> {user.City || "N/A"}</p>
+        <p><strong>Job Type:</strong> {user.jobtype || "N/A"}</p>
+
+        {editingUser === user.email ? (
+          <>
+            <input type="text" name="firstname" className="border rounded px-2 py-1 w-full mt-1" value={editedData.firstname || ""} onChange={handleChange} />
+            <input type="text" name="phone" className="border rounded px-2 py-1 w-full mt-1" value={editedData.phone || ""} onChange={handleChange} />
+            <input type="text" name="City" className="border rounded px-2 py-1 w-full mt-1" value={editedData.City || ""} onChange={handleChange} />
+            <input type="text" name="jobtype" className="border rounded px-2 py-1 w-full mt-1" value={editedData.jobtype || ""} onChange={handleChange} />
+            <button className="bg-green-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={handleSave}>Save</button>
+            <button className="bg-gray-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => setEditingUser(null)}>Cancel</button>
+          </>
+        ) : (
+          <>
+            <button className="bg-blue-500 text-white px-3 py-1 rounded-md mt-2 mr-2" onClick={() => handleEdit(user)}>Edit</button>
+            <button className="bg-red-500 text-white px-3 py-1 rounded-md mt-2" onClick={() => handleDelete(user.email)}>Delete</button>
+          </>
+        )}
+      </div>
+    ))
+  )}
+</div>
+
           </div>
         )}
       </div>
-      {/* <Footer /> */}
     </>
   );
 };
