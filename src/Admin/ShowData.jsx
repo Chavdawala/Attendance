@@ -74,6 +74,7 @@ const ShowData = () => {
                   <th className="py-2 px-4 text-left">Phone</th>
                   <th className="py-2 px-4 text-left">City</th>
                   <th className="py-2 px-4 text-left">Job Type</th>
+                  <th className="py-2 px-4 text-left">Join Date</th>
                   <th className="py-2 px-4 text-center">Actions</th>
                 </tr>
               </thead>
