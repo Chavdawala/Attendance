@@ -14,9 +14,11 @@ function Email() {
         <h1 className="text-2xl font-extrabold mb-4 text-blue-600">📩 End of Day Report</h1>
         
         <p className="text-gray-600 mb-6">
-          Please submit your EOD (End of Day) report with the tasks you completed today.
-          Click the button below to send your report.
+         Please submit your <strong>EOD (End of Day) report</strong> with the tasks you completed today.  
+        If your report includes any <strong>photos or files</strong>, please make sure to <strong>attach them</strong> in the email.  
+        Click the button below to send your report.
         </p>
+
 
         <a
           href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}
