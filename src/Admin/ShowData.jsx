@@ -124,7 +124,7 @@ const ShowData = () => {
                         )}
                       </td>
                       <td className="py-2 px-4">{user.jobtype || "N/A"}</td>
-                      <td className="py-2 px-4">{user.joinDate}</td>
+                      <td className="py-2 px-4">{new Date(user.joinDate).toLocaleDateString()}</td>
                       <td className="py-2 px-4 text-center">
                         {editingUser === user.email ? (
                           <>
