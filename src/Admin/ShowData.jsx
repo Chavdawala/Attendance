@@ -31,7 +31,7 @@ const ShowData = () => {
   const handleDelete = async (email) => {
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/deleteUser/${email}`);
-      fetchUsers(); // Refresh user list
+      fetchUsers(); 
     } catch (error) {
       console.error("Error deleting user:", error);
     }

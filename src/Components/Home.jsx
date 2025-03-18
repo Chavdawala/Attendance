@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Mail, Lock } from "lucide-react";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 
@@ -64,10 +63,10 @@ const Home = () => {
 
     return (
         <GoogleOAuthProvider clientId={googleClientId}>
-            <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-100 via-white to-blue-200 px-4 animate-fadeIn">
-                <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl transition-transform transform hover:scale-105">
+            <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-300 via-blue-100 to-white px-4 animate-fadeIn">
+            <div className="w-[400px] p-8 bg-white rounded-2xl shadow-lg">
                     <form className="space-y-6" onSubmit={handleSubmit}>
-                        <h2 className="text-center text-black text-2xl font-bold">Login</h2>
+                        <h2 className="text-center text- text-3xl font-bold">Login</h2>
                         {error && <p className="text-red-500 text-center">{error}</p>}
 
                         {/* Email Input */}
@@ -80,7 +79,7 @@ const Home = () => {
                                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                 placeholder="Email"
                                 required
-                                className="w-full pl-10 py-3 text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200"
+                                className="w-full pl-10 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200"
                             />
                         </div>
 
@@ -94,7 +93,7 @@ const Home = () => {
                                 onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                                 placeholder="Password"
                                 required
-                                className="w-full pl-10 pr-10 py-3 text-gray-700 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200"
+                                className="w-full pl-10 pr-10 py-3 text-gray-700 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition duration-200"
                             />
                             <div className="absolute right-3 top-3 cursor-pointer text-gray-500 hover:text-gray-700" onClick={() => setShowPassword(!showPassword)}>
                                 {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
@@ -111,36 +110,36 @@ const Home = () => {
                         {/* Submit Button */}
                         <button
                             type="submit"
-                            className="w-full h-12 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-md shadow-md transition duration-200"
+                            className="w-full h-12 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold rounded-lg shadow-sm transition duration-300"
                         >
                             LOGIN
                         </button>
-
-                        {/* Google Login Button */}
-                        <div className="w-full flex justify-center mt-4">
-                            <GoogleLogin
-                                onSuccess={handleGoogleLoginSuccess}
-                                onError={() => setError("Google login was unsuccessful.")}
-                                useOneTap
-                            />
-                        </div>
-
-                        {/* Admin Login */}
-                        <p className="text-center text-sm text-gray-600">
-                            Login as{" "}
-                            <Link to="/AdminLogin" className="text-blue-500 hover:underline">
-                                Admin?
-                            </Link>
-                        </p>
-
-                        {/* Signup Link */}
-                        <p className="text-center text-sm text-gray-600">
-                            Don't have an account?{" "}
-                            <Link to="/signup" className="text-blue-500 hover:underline">
-                                Create Your Account
-                            </Link>
-                        </p>
                     </form>
+
+                    {/* Google Login Button (Fixed) */}
+                    <div className="w-full flex justify-center mt-4">
+                        <GoogleLogin
+                            onSuccess={handleGoogleLoginSuccess}
+                            onError={() => setError("Google login was unsuccessful.")}
+                            width="300"
+                        />
+                    </div>
+
+                    {/* Admin Login */}
+                    <p className="text-center text-sm text-gray-600 mt-3">
+                        Login as{" "}
+                        <Link to="/AdminLogin" className="text-blue-500 hover:underline">
+                            Admin?
+                        </Link>
+                    </p>
+
+                    {/* Signup Link */}
+                    <p className="text-center text-sm text-gray-600">
+                        Don't have an account?{" "}
+                        <Link to="/signup" className="text-blue-500 hover:underline">
+                            Create Your Account
+                        </Link>
+                    </p>
                 </div>
             </div>
         </GoogleOAuthProvider>
