@@ -3,7 +3,7 @@ import Navbar from './Navbar';
 
 function Email() {
   const email = "harshchavda529@gmail.com";
-  const subject = "EOD Report - [Your Name]";
+  const subject = "EOD Report - [Your Name], [Your Department]";
   const body = `Hello,\n\nHere is my EOD (End of Day) report:\n\n- Tasks Completed: \n- Challenges Faced: \n- Plans for Tomorrow: \n\nBest Regards,\n[Your Name]`;
 
   return (
