@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import Navbar from './Navbar';
 
 function ShowAttendance() {
   const messageRef = useRef(null);
@@ -13,6 +14,8 @@ function ShowAttendance() {
   }, []);
 
   return (
+    <>
+    <Navbar/>
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <h1
         ref={messageRef}
@@ -21,6 +24,7 @@ function ShowAttendance() {
         🚧 This page is under construction! 🚧
       </h1>
     </div>
+    </>
   );
 }
 
