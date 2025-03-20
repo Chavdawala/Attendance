@@ -11,7 +11,7 @@ function DateTimeDisplay() {
   const [statusMessage, setStatusMessage] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [mockData, setMockData] = useState([]); // Dummy data for display
+  const [mockData, setMockData] = useState([]); // 
 
   console.log("Data Retrieved:", { name, email, latitude, longitude });
 
