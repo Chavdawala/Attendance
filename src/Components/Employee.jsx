@@ -1,6 +1,7 @@
 
 
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 function AdminDashboard() {
     const [users, setUsers] = useState([]);
@@ -154,6 +155,8 @@ function AdminDashboard() {
                     );
                 })}
             </div>
+            <Link to="/MarkAttendance" className="mt-8 block text-center text-blue-500 font-semibold">
+                Go to Mark Attendance</Link>
         </div>
     );
 }

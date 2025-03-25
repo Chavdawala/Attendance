@@ -21,6 +21,7 @@ import ResetPassword from "./Components/ResetPassword";
 import DisplayRecord from "./Components/DisplayRecord";
 import EodEmail from "./Components/Eod-Email";
 import ShowAttendance from "./Components/ShowAttendance";
+import MarkAttendance from "./Admin/MarkAttendance";
 
 const App = () => {
   return (
@@ -52,6 +53,7 @@ const App = () => {
           <Route path="/admin" element={<Admin />} />
           <Route path="/userdata" element={<UserData />} />
           <Route path="/ShowData" element={<ShowData />} />
+          <Route path="/MarkAttendance" element={<MarkAttendance />} />
           <Route path="/user" element={<User />} />
         </Route>
       </Routes>
