@@ -19,11 +19,11 @@ export default function MarkAttendanceSystem() {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const emailFromURL = searchParams.get("email");
-    const storedEmail = localStorage.getItem("userEmail");
+    const storedEmail = sessionStorage.getItem("userEmail");
 
     if (emailFromURL) {
       setUserEmail(emailFromURL);
-      localStorage.setItem("userEmail", emailFromURL);
+      sessionStorage.setItem("userEmail", emailFromURL);
     } else if (storedEmail) {
       setUserEmail(storedEmail);
     }
@@ -34,7 +34,7 @@ export default function MarkAttendanceSystem() {
       if (!userEmail) return;
 
       try {
-        const cachedAttendance = localStorage.getItem(`attendance-${userEmail}`);
+        const cachedAttendance = sessionStorage.getItem(`attendance-${userEmail}`);
         if (cachedAttendance) {
           const parsedAttendance = JSON.parse(cachedAttendance);
           setAttendance(parsedAttendance);
@@ -49,7 +49,7 @@ export default function MarkAttendanceSystem() {
           }, {});
 
           setAttendance(fetchedAttendance);
-          localStorage.setItem(`attendance-${userEmail}`, JSON.stringify(fetchedAttendance));
+          sessionStorage.setItem(`attendance-${userEmail}`, JSON.stringify(fetchedAttendance));
           calculateTotals(fetchedAttendance);
         }
       } catch (error) {
@@ -77,7 +77,7 @@ export default function MarkAttendanceSystem() {
   const updateAttendance = (date, status) => {
     const updatedAttendance = { ...attendance, [date]: status };
     setAttendance(updatedAttendance);
-    localStorage.setItem(`attendance-${userEmail}`, JSON.stringify(updatedAttendance));
+    sessionStorage.setItem(`attendance-${userEmail}`, JSON.stringify(updatedAttendance));
     calculateTotals(updatedAttendance);
   };
 
