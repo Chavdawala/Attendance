@@ -151,7 +151,7 @@ function AdminDashboard() {
                                     </button>
                                 )}
                             </div>
-                            <Link to={`/MarkmarkAttendance?email=${encodeURIComponent(user.email)}`} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                            <Link to={`/MarkAttendance?email=${encodeURIComponent(user.email)}`} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
                             Mark markAttendance
                             </Link>
                         </div>
