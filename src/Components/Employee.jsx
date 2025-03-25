@@ -89,8 +89,8 @@ function AdminDashboard() {
     if (users.length === 0) return <p>Loading user data...</p>;
 
     return (
-        <div className="container mx-auto p-8 bg-sky-50 min-h-screen">
-            <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">Attendance Summary</h1>
+        <div className="container mx-auto p-8 bg-gradient-to-b from-white to-blue-200 min-h-screen">
+            <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center">markAttendance Summary</h1>
             <div className="grid md:grid-cols-2 gap-8">
                 {users.map((user, index) => {
                     const details = userDetails[user.email] || {};
@@ -151,12 +151,13 @@ function AdminDashboard() {
                                     </button>
                                 )}
                             </div>
+                            <Link to={`/MarkmarkAttendance?email=${encodeURIComponent(user.email)}`} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
+                            Mark markAttendance
+                            </Link>
                         </div>
                     );
                 })}
             </div>
-            <Link to="/MarkAttendance" className="mt-8 block text-center text-blue-500 font-semibold">
-                Go to Mark Attendance</Link>
         </div>
     );
 }
