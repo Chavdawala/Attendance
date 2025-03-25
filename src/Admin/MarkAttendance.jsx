@@ -47,7 +47,9 @@ export default function MarkAttendanceSystem() {
             acc[entry.date] = entry.status;
             return acc;
           }, {});
+  
 
+          
           setAttendance(fetchedAttendance);
           sessionStorage.setItem(`attendance-${userEmail}`, JSON.stringify(fetchedAttendance));
           calculateTotals(fetchedAttendance);
