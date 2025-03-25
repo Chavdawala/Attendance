@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const markAttendanceSchema = new Schema({
+  date: String,
+  status: String, 
+});
+
 const userSchema = new Schema({
   department: { type: String, required: true },
   users: [{
@@ -9,7 +14,8 @@ const userSchema = new Schema({
     lastname: String,
     Birthdate: Date,
     City: String,
-    email:{type: String, required: true},
+    State: String,
+    email: { type: String, required: true },
     secondemail: String,
     phone: String,
     jobtype: String,
@@ -20,8 +26,10 @@ const userSchema = new Schema({
     shift: String,
     startTime: String,
     endTime: String,
+    markAttendance: [markAttendanceSchema],
   }],
 });
 
 const UserDetails = mongoose.model('UserDetails', userSchema);
+
 module.exports = UserDetails;
