@@ -4,7 +4,9 @@ const {
   getUsers, 
   updateUser,
   deleteUser,  
-  getUserByEmail 
+  getUserByEmail,
+  markAttendance,
+  getmarkAttendanceByEmail
 } = require('../Controller/UserController');
 
 const router = express.Router();
@@ -15,5 +17,7 @@ router.get('/getUsers', getUsers);
 router.put('/updateUser/:email', updateUser);
 router.delete('/deleteUser/:email', deleteUser);
 router.get('/getUser/:email', getUserByEmail); // 
+router.post('/markAttendance/:email', markAttendance);
+router.get('/getmarkAttendance/:email', getmarkAttendanceByEmail);
 
 module.exports = router;

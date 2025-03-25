@@ -101,9 +101,6 @@ const deleteUser = async (req, res) => {
 
 
 
-
-
-
 // Fetch a user by email
 const getUserByEmail = async (req, res) => {
   try {
@@ -127,6 +124,51 @@ const getUserByEmail = async (req, res) => {
   }
 };
 
+const markAttendance = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const { date, status } = req.body;
+
+    const user = await UserDetails.findOneAndUpdate(
+      { "users.email": email },
+      { $push: { "users.$.markAttendance": { date, status } } },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json({ message: "markAttendance marked successfully", user });
+  } catch (error) {
+    console.error("Error marking markAttendance:", error);
+    res.status(500).json({ error: "Error marking markAttendance" });
+  }
+};
+
+// Fetch markAttendance of a user by email
+const getmarkAttendanceByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+
+    // Find the user with the specified email
+    const user = await UserDetails.findOne({ "users.email": email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Get markAttendance for the correct user
+    const userDetails = user.users.find((u) => u.email === email);
+    const markAttendance = userDetails?.markAttendance || [];
+
+    res.status(200).json({ markAttendance });
+  } catch (error) {
+    console.error("Error fetching markAttendance:", error);
+    res.status(500).json({ error: "Error fetching markAttendance" });
+  }
+};
+
 
 module.exports = {
   saveUser,
@@ -134,4 +176,6 @@ module.exports = {
   updateUser,
   deleteUser,
   getUserByEmail, // Export 
+  getmarkAttendanceByEmail,
+  markAttendance,
 };
