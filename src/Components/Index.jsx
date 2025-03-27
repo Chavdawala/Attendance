@@ -16,7 +16,6 @@ function Index() {
     <div>
     <DisplayData/>
     <ShowAttendance/>
-    {/* <DisplayRecord/> */}
     <Card/>
     <Mission/>
     <Footer/>

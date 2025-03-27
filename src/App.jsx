@@ -20,8 +20,9 @@ import ForgotPassword from "./Components/ForgotPassword";
 import ResetPassword from "./Components/ResetPassword";
 import DisplayRecord from "./Components/DisplayRecord";
 import EodEmail from "./Components/Eod-Email";
-import ShowAttendance from "./Components/ShowAttendance";
+// import ShowAttendance from "./Components/ShowAttendance";
 import MarkAttendance from "./Admin/MarkAttendance";
+import Show from "./Components/Show";
 
 const App = () => {
   return (
@@ -41,7 +42,7 @@ const App = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/help" element={<Help />} />
           <Route path="/EodEmail" element={<EodEmail />} />
-          <Route path="/ShowAttendance" element={<ShowAttendance/>} />
+          <Route path="/Show" element={<Show/>} />
           <Route path="/Date" element={<DateTimeDisplay />} />
           <Route path="/displayRecord" element={<DisplayRecord />} />
           <Route path="/about" element={<About />} />
