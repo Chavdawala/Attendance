@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { markAttendance } from "../Utils/attendanceUtils";
+import { markAttendance } from "../utils/attendanceUtils";
 
 function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
@@ -127,6 +127,26 @@ function DateTimeDisplay() {
           <div className="bg-gray-50 p-4 rounded-md mb-4 text-center">
             <h2 className="text-lg font-bold text-gray-700">Current Date and Time</h2>
             <p className="text-gray-600">{formatDateTime(dateTime)}</p>
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-md mb-4 text-center">
+            <h2 className="text-lg font-bold text-gray-700">Your Location</h2>
+            {latitude && longitude ? (
+              <div className="text-gray-600">
+                <p><strong>Latitude:</strong> {latitude}</p>
+                <p><strong>Longitude:</strong> {longitude}</p>
+              </div>
+            ) : (
+              <p className="text-red-500">Fetching your location...</p>
+            )}
+          </div>
+
+          <div className="bg-gray-50 p-4 rounded-md mb-4 text-center">
+            <h2 className="text-lg font-bold text-gray-700">Log Your Time</h2>
+            <p className="text-gray-600">Log out with name & email. See your summary by clicking "Attendance."<br/>
+              <br/>
+              <Link className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-500 font-bold" to='/index'> Attendance</Link>
+            </p>
           </div>
 
           <button
