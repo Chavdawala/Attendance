@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
-import { markAttendance } from "../utils/attendanceUtils";
+import { markAttendance } from "../Utils/attendanceUtils";
 
 function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
