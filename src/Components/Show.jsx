@@ -9,7 +9,7 @@ function Show() {
    <Navbar/>
    <ShowAttendance/>
    <DisplayReocrd/>
-   <h1></h1>
+   
    </>
   )
 }
