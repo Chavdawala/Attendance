@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
-// import Footer from "./Footer";
+import { markAttendance } from "../Utils/attendanceUtils";
 
 function DateTimeDisplay() {
   const [dateTime, setDateTime] = useState(new Date());
@@ -11,7 +11,7 @@ function DateTimeDisplay() {
   const [statusMessage, setStatusMessage] = useState("");
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
-  const [mockData, setMockData] = useState([]); // 
+  const [mockData, setMockData] = useState([]);
 
   console.log("Data Retrieved:", { name, email, latitude, longitude });
 
@@ -53,7 +53,8 @@ function DateTimeDisplay() {
       return;
     }
 
-    const logoutTime = new Date().toISOString(); // Store in ISO format for consistency
+    const logoutTime = new Date().toISOString();
+    const selectedDate = new Date().toISOString().split("T")[0];
 
     if (!email || !name || !latitude || !longitude) {
       console.error("Missing required fields!");
@@ -89,6 +90,9 @@ function DateTimeDisplay() {
 
       setStatusMessage(response.data.message);
       console.log("Logout time stored successfully:", response.data);
+
+      // Mark attendance as Present
+      markAttendance(email, selectedDate, "Present", setMockData, setStatusMessage);
     } catch (error) {
       console.error("Error storing logout time:", error.response?.data || error.message);
       setStatusMessage("Error storing logout time.");
@@ -102,7 +106,6 @@ function DateTimeDisplay() {
         <div className="bg-white shadow-md p-6 rounded-lg w-full max-w-md">
           <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Store Logout Time</h1>
           
-          {/* Input Fields */}
           <label className="block mb-2 text-gray-700 font-semibold">Name:</label>
           <input
             type="text"
@@ -121,34 +124,11 @@ function DateTimeDisplay() {
             className="w-full p-2 border rounded-md mb-4"
           />
 
-          {/* Current Time */}
           <div className="bg-gray-50 p-4 rounded-md mb-4 text-center">
             <h2 className="text-lg font-bold text-gray-700">Current Date and Time</h2>
             <p className="text-gray-600">{formatDateTime(dateTime)}</p>
           </div>
 
-          <div className="bg-gray-50 p-4 rounded-md mb-4 text-center">
-                     <h2 className="text-lg font-bold text-gray-700">Log Your Time</h2>
-                     <p className="text-gray-600"> Log out with name & email. See your summary by clicking "Attendance." <br/>
-                          <br/>
-                       <Link  className="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-500 font-bold" to ='/index' > Attendance</Link>
-                     </p>
-                   </div>
-
-          {/* Location Section */}
-          <div className="bg-gray-50 p-4 rounded-md mb-4 text-center">
-            <h2 className="text-lg font-bold text-gray-700">Your Location</h2>
-            {latitude && longitude ? (
-              <div className="text-gray-600">
-                <p><strong>Latitude:</strong> {latitude}</p>
-                <p><strong>Longitude:</strong> {longitude}</p>
-              </div>
-            ) : (
-              <p className="text-red-500">Fetching your location...</p>
-            )}
-          </div>
-
-          {/* Store Data Button */}
           <button
             onClick={storeLogoutTime}
             className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
@@ -157,25 +137,8 @@ function DateTimeDisplay() {
           </button>
         </div>
 
-        {/* Display Status Message */}
         {statusMessage && <p className="mt-4 text-green-700">{statusMessage}</p>}
-
-        {/* Display Mock Data */}
-        {mockData.length > 0 && (
-          <div className="mt-6 w-full max-w-lg bg-white shadow-md p-4 rounded-lg">
-            <h2 className="text-lg font-bold text-gray-700 mb-3">Stored Data</h2>
-            {mockData.map((entry, index) => (
-              <div key={index} className="border-b py-2">
-                <p><strong>Name:</strong> {entry.name}</p>
-                <p><strong>Email:</strong> {entry.email}</p>
-                <p><strong>Login Time:</strong> {entry.loginTime}</p>
-                <p><strong>Location:</strong> {entry.latitude}, {entry.longitude}</p>
-              </div>
-            ))}
-          </div>
-        )}
       </div>
-      {/* <Footer/> */}
     </>
   );
 }
