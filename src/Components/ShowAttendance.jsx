@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import Navbar from "./Navbar";
+import DisplayRecord from "./DisplayRecord";
 
 export default function AttendanceView() {
   const [attendance, setAttendance] = useState({});
@@ -141,6 +142,7 @@ export default function AttendanceView() {
         </div>
       </div>
     </div>
+    <DisplayRecord/>
     </>
   );
 }
