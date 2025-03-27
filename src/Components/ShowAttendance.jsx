@@ -109,7 +109,7 @@ export default function AttendanceView() {
 
   return (
     <>
-    <Navbar/>
+    {/* <Navbar/> */}
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-md">
         <h1 className="text-xl font-bold">Attendance View</h1>
