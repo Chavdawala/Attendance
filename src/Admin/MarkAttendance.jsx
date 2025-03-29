@@ -48,8 +48,6 @@ export default function MarkAttendanceSystem() {
             return acc;
           }, {});
   
-
-          
           setAttendance(fetchedAttendance);
           sessionStorage.setItem(`attendance-${userEmail}`, JSON.stringify(fetchedAttendance));
           calculateTotals(fetchedAttendance);
@@ -62,7 +60,6 @@ export default function MarkAttendanceSystem() {
     fetchAttendance();
   }, [userEmail]);
 
-  // Calculate the total "Present" and "Absent" days
   const calculateTotals = (attendanceData) => {
     let presentDays = 0;
     let absentDays = 0;
@@ -95,7 +92,7 @@ export default function MarkAttendanceSystem() {
     return (
       <>
         {Array.from({ length: firstDay }, (_, i) => (
-          <div key={`empty-${i}`} className="day"></div>
+          <div key={`empty-${i}`} className="h-10"></div>
         ))}
         {Array.from({ length: daysInMonth }, (_, i) => {
           const date = `${currentYear}-${String(currentMonth + 1).padStart(2, "0")}-${String(i + 1).padStart(2, "0")}`;
@@ -103,13 +100,9 @@ export default function MarkAttendanceSystem() {
             <div
               key={date}
               onClick={() => setSelectedDate(date)}
-              className={`day p-2 border rounded text-center cursor-pointer ${
-                attendance[date] === "Present"
-                  ? "bg-green-500 text-white"
-                  : attendance[date] === "Absent"
-                  ? "bg-red-500 text-white"
-                  : "bg-gray-200 hover:bg-gray-300"
-              }`}
+              className={`h-12 flex items-center justify-center rounded-md cursor-pointer text-sm font-medium border 
+                ${attendance[date] === "Present" ? "bg-green-500 text-white" : 
+                attendance[date] === "Absent" ? "bg-red-500 text-white" : "bg-gray-200 hover:bg-gray-300"}`}
             >
               {i + 1}
             </div>
@@ -120,66 +113,31 @@ export default function MarkAttendanceSystem() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-md">
-        <h1 className="text-xl font-bold">Attendance System</h1>
-        <p className="text-lg font-semibold text-gray-800">User Email: {userEmail}</p>
-        <button onClick={() => navigate(-1)} className="mt-4 px-4 py-2 bg-blue-500 text-white rounded">
-          Back
-        </button>
+    <div className="flex justify-center items-center h-screen bg-gray-50 p-4">
+      <div className="bg-white p-6 rounded-xl shadow-xl text-center w-full max-w-md border border-gray-200">
+        <h1 className="text-2xl font-bold text-gray-700">Attendance System</h1>
+        <p className="text-lg text-gray-600 mt-2">User: {userEmail}</p>
 
-        {/* Display Total Present and Absent */}
-        <div className="mt-4">
-          <p className="text-lg font-semibold">Total Present: {presentCount}</p>
-          <p className="text-lg font-semibold">Total Absent: {absentCount}</p>
+        <div className="mt-4 grid grid-cols-2 gap-4 border p-3 rounded-md bg-gray-100">
+          <p className="text-green-600 font-semibold text-center">Present: {presentCount}</p>
+          <p className="text-red-600 font-semibold text-center">Absent: {absentCount}</p>
         </div>
 
-        <div className="mt-4 flex justify-between">
-          <button onClick={() => changeMonth(-1)} className="px-4 py-2 bg-gray-500 text-white rounded">
-            ◀ Prev
-          </button>
+        <div className="mt-4 flex justify-between items-center">
+          <button onClick={() => changeMonth(-1)} className="px-4 py-2 bg-blue-400 text-white rounded-md shadow hover:bg-blue-500">◀ Prev</button>
           <p className="text-lg font-semibold">
             {new Date(currentYear, currentMonth).toLocaleString("default", { month: "long", year: "numeric" })}
           </p>
-          <button onClick={() => changeMonth(1)} className="px-4 py-2 bg-gray-500 text-white rounded">
-            Next ▶
-          </button>
+          <button onClick={() => changeMonth(1)} className="px-4 py-2 bg-blue-400 text-white rounded-md shadow hover:bg-blue-500">Next ▶</button>
         </div>
 
         <input
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="mt-4 px-4 py-2 border rounded"
+          className="mt-4 px-4 py-2 border rounded-md w-full text-center"
         />
-
-        <button
-          onClick={() => {
-            markAttendance(userEmail, selectedDate, "Present");
-            updateAttendance(selectedDate, "Present");
-          }}
-          className="mt-4 px-4 py-2 bg-green-500 text-white rounded"
-        >
-          Mark Present
-        </button>
-        <button
-          onClick={() => {
-            markAttendance(userEmail, selectedDate, "Absent");
-            updateAttendance(selectedDate, "Absent");
-          }}
-          className="mt-4 ml-2 px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Mark Absent
-        </button>
-
-        <div className="grid grid-cols-7 gap-2 mt-4">
-          {["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => (
-            <div key={day} className="font-bold">
-              {day}
-            </div>
-          ))}
-          {renderCalendar()}
-        </div>
+        {renderCalendar()}
       </div>
     </div>
   );
