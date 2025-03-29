@@ -1,14 +1,15 @@
 import React from 'react'
 import Navbar from './Navbar'
 import ShowAttendance from './ShowAttendance'
-import DisplayReocrd from './DisplayReocrd'
+import DisplayRecord from "./DisplayRecord"; 
+
 
 function Show() {
   return (
    <>
    <Navbar/>
    <ShowAttendance/>
-   <DisplayReocrd/>
+   <DisplayRecord/>
    
    </>
   )
