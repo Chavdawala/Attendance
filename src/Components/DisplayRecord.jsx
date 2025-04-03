@@ -83,78 +83,66 @@ function AttendanceSummary() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 p-6">
-    <div className="w-full max-w-4xl bg-white bg-opacity-30 backdrop-blur-lg shadow-2xl border border-gray-300 rounded-2xl p-10">
-      <h1
-        ref={titleRef}
-        className="text-4xl font-extrabold text-gray-900 mb-8 text-center tracking-wide"
-      >
-        Attendance Summary
-      </h1>
+      <div className="w-full max-w-4xl bg-white bg-opacity-30 backdrop-blur-lg shadow-2xl border border-gray-300 rounded-2xl p-10">
+        <h1
+          ref={titleRef}
+          className="text-4xl font-extrabold text-gray-900 mb-8 text-center tracking-wide"
+        >
+          Attendance Summary
+        </h1>
   
-      {/* ✅ Debugging: Display fetched data */}
-      <pre className="bg-gray-900 text-green-400 p-4 rounded-lg text-sm overflow-auto shadow-lg">
-        {JSON.stringify(attendanceRecords, null, 2)}
-      </pre>
-      <pre className="bg-gray-900 text-red-400 p-4 rounded-lg text-sm overflow-auto shadow-lg mt-2">
-        {JSON.stringify(logoutRecords, null, 2)}
-      </pre>
+        {attendanceRecords.length > 0 ? (
+          <div className="w-full bg-white bg-opacity-50 shadow-md rounded-xl p-6 mt-6">
+            {attendanceRecords.slice(0, visibleCount).map((record, index) => {
+              const logoutRecord = findMatchingLogout(record.time);
+              return (
+                <div
+                  key={record._id}
+                  ref={(el) => (recordsRef.current[index] = el)}
+                  className="flex flex-col sm:flex-row justify-between items-center bg-white bg-opacity-90 p-5 rounded-lg shadow-md mb-4 transition transform hover:scale-105 hover:shadow-xl"
+                >
+                  <p className="text-gray-800">
+                    <strong className="text-blue-600">Login:</strong>{" "}
+                    {new Date(record.time).toLocaleString()}
+                  </p>
+                  <p className="text-gray-800">
+                    <strong className="text-red-600">Logout:</strong>{" "}
+                    {logoutRecord
+                      ? new Date(logoutRecord.time).toLocaleString()
+                      : "Not logged out yet"}
+                  </p>
+                </div>
+              );
+            })}
   
-      {attendanceRecords.length > 0 ? (
-        <div className="w-full bg-white bg-opacity-50 shadow-md rounded-xl p-6 mt-6">
-          {attendanceRecords.slice(0, visibleCount).map((record, index) => {
-            const logoutRecord = findMatchingLogout(record.time);
-            return (
-              <div
-                key={record._id}
-                ref={(el) => (recordsRef.current[index] = el)}
-                className="flex flex-col sm:flex-row justify-between items-center bg-white bg-opacity-90 p-5 rounded-lg shadow-md mb-4 transition transform hover:scale-105 hover:shadow-xl"
-              >
-                <p className="text-gray-800">
-                  <strong className="text-blue-600">Login:</strong>{" "}
-                  {new Date(record.time).toLocaleString()}
-                </p>
-                <p className="text-gray-800">
-                  <strong className="text-red-600">Logout:</strong>{" "}
-                  {logoutRecord
-                    ? new Date(logoutRecord.time).toLocaleString()
-                    : "Not logged out yet"}
-                </p>
-                <p className="text-gray-800">
-                  <strong className="text-green-600">Location:</strong>{" "}
-                  {record.latitude}, {record.longitude}
-                </p>
-              </div>
-            );
-          })}
-  
-          <div className="mt-6 flex justify-center gap-4">
-            {visibleCount < attendanceRecords.length && (
-              <button
-                onClick={handleShowMore}
-                className="bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105"
-              >
-                Show More
-              </button>
-            )}
-            {visibleCount > 3 && (
-              <button
-                onClick={handleShowLess}
-                className="bg-gray-600 text-white px-6 py-2 rounded-full shadow-lg hover:bg-gray-700 transition transform hover:scale-105"
-              >
-                Show Less
-              </button>
-            )}
+            <div className="mt-6 flex justify-center gap-4">
+              {visibleCount < attendanceRecords.length && (
+                <button
+                  onClick={handleShowMore}
+                  className="bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg hover:bg-blue-700 transition transform hover:scale-105"
+                >
+                  Show More
+                </button>
+              )}
+              {visibleCount > 3 && (
+                <button
+                  onClick={handleShowLess}
+                  className="bg-gray-600 text-white px-6 py-2 rounded-full shadow-lg hover:bg-gray-700 transition transform hover:scale-105"
+                >
+                  Show Less
+                </button>
+              )}
+            </div>
           </div>
-        </div>
-      ) : (
-        <p className="text-gray-700 text-center text-lg font-semibold">
-          No attendance records found.
-        </p>
-      )}
+        ) : (
+          <p className="text-gray-700 text-center text-lg font-semibold">
+            No attendance records found.
+          </p>
+        )}
+      </div>
     </div>
-  </div>
-  
   );
+  
 }
 
 export default AttendanceSummary;
