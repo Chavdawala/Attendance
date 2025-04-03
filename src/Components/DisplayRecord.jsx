@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import axios from "axios";
+import { FaSignInAlt, FaSignOutAlt, FaMapMarkerAlt } from "react-icons/fa";
 
 function AttendanceSummary() {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -27,9 +28,6 @@ function AttendanceSummary() {
             headers: { Authorization: `Bearer ${authToken}` },
           }),
         ]);
-
-        console.log("✅ Attendance Records:", attendanceResponse.data.records);
-        console.log("✅ Logout Records:", logoutResponse.data.records);
 
         if (attendanceResponse.data.records) {
           setAttendanceRecords(attendanceResponse.data.records);
@@ -68,59 +66,57 @@ function AttendanceSummary() {
     });
   }, [visibleCount]);
 
-  const handleShowMore = () => {
-    setVisibleCount((prev) => prev + 3);
-  };
+  const handleShowMore = () => setVisibleCount((prev) => prev + 3);
+  const handleShowLess = () => setVisibleCount((prev) => (prev > 3 ? prev - 3 : 3));
 
-  const handleShowLess = () => {
-    setVisibleCount((prev) => (prev > 3 ? prev - 3 : 3));
-  };
-
-  // ✅ Function to correctly find matching logout time
   const findMatchingLogout = (loginTime) => {
     return logoutRecords.find((logout) => new Date(logout.time) >= new Date(loginTime)) || null;
   };
 
   return (
-    <div className="flex justify-center bg-white p-6">
-      <div className="w-full max-w-4xl bg-white p-8 shadow-sm border border-gray-200 border-t-0 rounded-b-lg">
-        <h1 ref={titleRef} className="text-3xl font-bold text-gray-800 mb-6 text-center">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-200 via-purple-200 to-pink-200 p-6">
+      <div className="w-full max-w-4xl bg-white bg-opacity-30 backdrop-blur-md p-8 shadow-lg border border-gray-300 rounded-xl">
+        <h1 ref={titleRef} className="text-4xl font-extrabold text-gray-800 mb-6 text-center tracking-wide">
           Attendance Summary
         </h1>
 
-        {/* ✅ Debugging: Display fetched data */}
-        <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">{JSON.stringify(attendanceRecords, null, 2)}</pre>
-        <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">{JSON.stringify(logoutRecords, null, 2)}</pre>
-
         {attendanceRecords.length > 0 ? (
-          <div className="w-full bg-sky-50 shadow-sm rounded-lg p-6">
+          <div className="w-full bg-white bg-opacity-40 shadow-md rounded-xl p-6">
             {attendanceRecords.slice(0, visibleCount).map((record, index) => {
               const logoutRecord = findMatchingLogout(record.time);
-
               return (
                 <div
-                  key={record._id} // ✅ Using unique _id instead of index
+                  key={record._id}
                   ref={(el) => (recordsRef.current[index] = el)}
-                  className="border-b py-4 text-center last:border-b-0"
+                  className="relative flex flex-col sm:flex-row items-center justify-between bg-white bg-opacity-80 p-5 rounded-lg shadow-md mb-4 transition hover:scale-105 hover:shadow-lg"
                 >
-                  <p className="text-gray-700">
-                    <strong>Login Time:</strong> {new Date(record.time).toLocaleString()}
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Logout Time:</strong> {logoutRecord ? new Date(logoutRecord.time).toLocaleString() : "Not logged out yet"}
-                  </p>
-                  <p className="text-gray-700">
-                    <strong>Location:</strong> {record.latitude}, {record.longitude}
-                  </p>
+                  <div className="flex items-center space-x-3">
+                    <FaSignInAlt className="text-blue-500 text-xl" />
+                    <p className="text-gray-800">
+                      <strong>Login:</strong> {new Date(record.time).toLocaleString()}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <FaSignOutAlt className="text-red-500 text-xl" />
+                    <p className="text-gray-800">
+                      <strong>Logout:</strong> {logoutRecord ? new Date(logoutRecord.time).toLocaleString() : "Not logged out yet"}
+                    </p>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <FaMapMarkerAlt className="text-green-500 text-xl" />
+                    <p className="text-gray-800">
+                      <strong>Location:</strong> {record.latitude}, {record.longitude}
+                    </p>
+                  </div>
                 </div>
               );
             })}
 
-            <div className="mt-4 flex justify-center gap-4">
+            <div className="mt-6 flex justify-center gap-4">
               {visibleCount < attendanceRecords.length && (
                 <button
                   onClick={handleShowMore}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                  className="bg-blue-500 text-white px-6 py-2 rounded-full shadow-lg hover:bg-blue-600 transition"
                 >
                   Show More
                 </button>
@@ -128,7 +124,7 @@ function AttendanceSummary() {
               {visibleCount > 3 && (
                 <button
                   onClick={handleShowLess}
-                  className="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition"
+                  className="bg-gray-500 text-white px-6 py-2 rounded-full shadow-lg hover:bg-gray-600 transition"
                 >
                   Show Less
                 </button>
@@ -136,7 +132,7 @@ function AttendanceSummary() {
             </div>
           </div>
         ) : (
-          <p className="text-gray-600 text-center">No attendance records found.</p>
+          <p className="text-gray-700 text-center text-lg font-semibold">No attendance records found.</p>
         )}
       </div>
     </div>
