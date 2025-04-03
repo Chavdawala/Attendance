@@ -10,44 +10,39 @@ function AttendanceSummary() {
   const recordsRef = useRef([]);
 
   useEffect(() => {
-    const fetchAttendance = async () => {
+    const fetchData = async () => {
       const authToken = sessionStorage.getItem("authtoken");
       const userEmail = sessionStorage.getItem("userEmail");
       if (!userEmail) return;
 
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user`, {
-          params: { email: userEmail },
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-        if (response.data && response.data.records) {
-          setAttendanceRecords(response.data.records);
+        // Fetch attendance and logout records simultaneously
+        const [attendanceResponse, logoutResponse] = await Promise.all([
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user`, {
+            params: { email: userEmail },
+            headers: { Authorization: `Bearer ${authToken}` },
+          }),
+          axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
+            params: { email: userEmail },
+            headers: { Authorization: `Bearer ${authToken}` },
+          }),
+        ]);
+
+        console.log("✅ Attendance Records:", attendanceResponse.data.records);
+        console.log("✅ Logout Records:", logoutResponse.data.records);
+
+        if (attendanceResponse.data.records) {
+          setAttendanceRecords(attendanceResponse.data.records);
+        }
+        if (logoutResponse.data.records) {
+          setLogoutRecords(logoutResponse.data.records);
         }
       } catch (error) {
-        console.error("Error fetching attendance:", error);
+        console.error("❌ Error fetching data:", error);
       }
     };
 
-    const fetchLogout = async () => {
-      const authToken = sessionStorage.getItem("authtoken");
-      const userEmail = sessionStorage.getItem("userEmail");
-      if (!userEmail) return;
-
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/logout`, {
-          params: { email: userEmail },
-          headers: { Authorization: `Bearer ${authToken}` },
-        });
-        if (response.data && response.data.records) {
-          setLogoutRecords(response.data.records);
-        }
-      } catch (error) {
-        console.error("Error fetching logout:", error);
-      }
-    };
-
-    fetchAttendance();
-    fetchLogout();
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -81,6 +76,11 @@ function AttendanceSummary() {
     setVisibleCount((prev) => (prev > 3 ? prev - 3 : 3));
   };
 
+  // ✅ Function to correctly find matching logout time
+  const findMatchingLogout = (loginTime) => {
+    return logoutRecords.find((logout) => new Date(logout.time) >= new Date(loginTime)) || null;
+  };
+
   return (
     <div className="flex justify-center bg-white p-6">
       <div className="w-full max-w-4xl bg-white p-8 shadow-sm border border-gray-200 border-t-0 rounded-b-lg">
@@ -88,13 +88,18 @@ function AttendanceSummary() {
           Attendance Summary
         </h1>
 
+        {/* ✅ Debugging: Display fetched data */}
+        <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">{JSON.stringify(attendanceRecords, null, 2)}</pre>
+        <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">{JSON.stringify(logoutRecords, null, 2)}</pre>
+
         {attendanceRecords.length > 0 ? (
           <div className="w-full bg-sky-50 shadow-sm rounded-lg p-6">
             {attendanceRecords.slice(0, visibleCount).map((record, index) => {
-              const logoutRecord = logoutRecords[index] || null;
+              const logoutRecord = findMatchingLogout(record.time);
+
               return (
                 <div
-                  key={index}
+                  key={record._id} // ✅ Using unique _id instead of index
                   ref={(el) => (recordsRef.current[index] = el)}
                   className="border-b py-4 text-center last:border-b-0"
                 >
@@ -107,7 +112,6 @@ function AttendanceSummary() {
                   <p className="text-gray-700">
                     <strong>Location:</strong> {record.latitude}, {record.longitude}
                   </p>
-                  
                 </div>
               );
             })}
